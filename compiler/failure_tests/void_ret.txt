@@ -1,0 +1,17 @@
+program prueba;
+
+var int: i;
+
+void module imprimirArray (var int: q;);
+	{
+	    write("esta es una prueba:");
+
+        return (q);
+    }
+
+
+main(){
+    i = 1;
+    imprimirArray(i);
+
+}

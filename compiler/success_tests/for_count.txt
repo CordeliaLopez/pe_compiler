@@ -1,0 +1,13 @@
+program prueba;
+
+var int: i;
+var float: cont;
+
+
+main(){
+
+    for i = 0 to 3 do{
+	    i = i + 1;
+        write("entro");
+	}
+}

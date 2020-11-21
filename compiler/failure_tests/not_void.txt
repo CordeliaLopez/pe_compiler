@@ -1,0 +1,14 @@
+program prueba;
+
+var int: i;
+
+int module imprimirArray (var int: q;);
+	{
+	    write("esta es una prueba:");
+    }
+
+
+main(){
+    i = imprimirArray(i);
+
+}

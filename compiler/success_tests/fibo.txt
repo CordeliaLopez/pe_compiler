@@ -1,0 +1,26 @@
+program prueba;
+
+var int: x;
+
+void module fibo(var int: a;);
+    var int: x, y, z, cont;
+	{
+        x = 0;
+        y = 1;
+        z = 0;
+        
+        for cont = 2 to a do
+        {
+            write(x, " ");
+            z = x + y;
+            x = y;
+            y = z;
+
+        }
+        
+	}
+
+main(){
+    read(x);
+    fibo(x);
+}

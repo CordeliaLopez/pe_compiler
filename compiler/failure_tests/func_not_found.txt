@@ -1,0 +1,12 @@
+program prueba;
+
+var int: x, y;
+
+main(){
+    x = 5;
+    y = 3;
+
+   x =  suma(x,y);
+
+   write(x);
+}

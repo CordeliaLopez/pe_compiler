@@ -1,0 +1,20 @@
+program prueba;
+
+var int: a[10], b[9], c[10], i, d[10], e[10], x;
+
+main(){
+
+    for i = 0 to 9 do{
+		  a[i] = i;
+	  }
+
+    for i = 0 to 8 do{
+		b[i] = i;
+	}
+
+    c = a + b;
+
+    for i = 0 to 9 do{
+		  write(c[i]);
+  	}
+}

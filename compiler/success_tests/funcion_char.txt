@@ -1,0 +1,15 @@
+program prueba;
+
+var char: caracter;
+
+char module charGet();
+    var char: a;
+	{
+        read(a);
+        return(a);
+	}
+
+main(){
+	caracter = charGet();
+    write(caracter);
+}

@@ -1,0 +1,21 @@
+program prueba;
+
+var int: x, y;
+var float: z;
+
+int module factorial(var int: a;);
+	{
+        if (a == 2) then{
+            return (a);
+        }
+        else {
+            return (a * factorial(a - 1)) ;
+        };
+	}
+
+main(){
+    read(x);
+    read(y);
+	x = factorial(x + y);
+    write(x);
+}

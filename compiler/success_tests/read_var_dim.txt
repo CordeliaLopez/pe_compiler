@@ -1,0 +1,18 @@
+program prueba;
+
+var int: z[2][2], i, j;
+
+main(){
+
+	for i = 0 to 1 do{
+        for j = 0 to 1 do{
+            read(z[i][j]);
+        }
+	}
+
+	for i = 0 to 1 do{
+        for j = 0 to 1 do{
+        	write(z[i][j]);
+        }
+	}
+}

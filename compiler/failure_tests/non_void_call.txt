@@ -1,0 +1,17 @@
+program prueba;
+
+var int: x, y;
+
+int module suma(var int: a,y;);
+	var int: resultado;
+	{
+	    resultado = a + y;
+	    return (resultado);
+	}
+
+main(){
+    x = 5;
+    y = 3;
+
+    suma(x,y);
+}

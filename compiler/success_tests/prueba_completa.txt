@@ -1,0 +1,70 @@
+program prueba;
+
+var int : x, y, r, contBloque, cont, cont2;
+var int: arr[3], mat[3][6];
+var float: fl;
+var char: z;
+
+int module suma(var int: a,y;);
+	var int: resultado;
+	{
+	    resultado = a + y;
+	    return (resultado);
+	}
+
+void module imprimirArray (var int: q;);
+	var float: w;
+	{
+	    write("esta es una prueba:");
+
+	    for cont = 0 to 2 do
+	    {
+		  write("hola");
+		}
+	}
+
+main(){
+	read(x, z);
+	write(x, z);
+	fl = 3.4;
+	write(fl);
+	if (x < 10 and (x > 2 or x < 4+1)) then {
+	   y = (x - 2) * 5;
+	   r = suma(1,y);
+	}
+	else {
+	    y = suma(x,10);
+	};
+
+	r = 1;
+	r = r + 1;
+	contBloque = 0;
+	while(contBloque < 4) do {
+	    r = r + 1;
+	    contBloque = contBloque + 1;
+	}
+
+	for cont = 0 to 2 do{
+		arr[cont] = cont;
+	}
+
+	for cont = 0 to 2 do{
+		write(arr[cont]);
+	}
+
+	for cont = 0 to 2 do{
+		for cont2 = 0 to 5 do{
+			mat[cont][cont2] = cont2;
+		}
+	}
+
+	for cont = 0 to 2 do{
+		for cont2 = 0 to 5 do{
+			write(mat[cont][cont2]);
+		}
+	}
+
+	imprimirArray(x);
+
+
+}

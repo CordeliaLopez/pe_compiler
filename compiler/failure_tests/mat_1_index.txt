@@ -1,0 +1,11 @@
+program prueba;
+
+var int: a[2][2];
+
+main(){
+
+   a[1] = -2;
+
+   write(a[1][0]);
+
+}

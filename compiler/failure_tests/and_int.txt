@@ -1,0 +1,14 @@
+program prueba;
+
+var int: i;
+
+
+main(){
+    i = 3;
+
+    while(i and 2) do {
+	    i = 4;
+	}
+
+    write(i);
+}

@@ -1,0 +1,30 @@
+program prueba;
+
+var char: a[3][2], b[2][3];
+var int: i, j, x;
+
+
+main(){
+
+a[0][0] = 'a';
+a[0][1] = 'b';
+a[1][0] = 'c';
+a[1][1] = 'd';
+a[2][0] = 'e';
+a[2][1] = 'f';
+
+
+ for i = 0 to 2 do{  
+    for j = 0 to 1 do{
+        write(a[i][j]);
+        }
+	}
+
+    b = a¡;
+    for i = 0 to 1 do{
+        for j = 0 to 2 do{
+            write(b[i][j]);
+        }
+	}
+
+}

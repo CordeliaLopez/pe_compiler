@@ -1,0 +1,13 @@
+program prueba;
+
+var int: i;
+
+
+main(){
+    i = 3;
+    if (i) then {
+	   i = 2;
+       write(i);
+	};
+
+}

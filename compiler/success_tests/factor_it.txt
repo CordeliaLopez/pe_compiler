@@ -1,0 +1,20 @@
+program prueba;
+
+var int: x, cont;
+
+int module factorial(var int: a;);
+    var int: fact;
+	{
+        fact = 1;
+        for cont = 2 to a do
+        {
+		  fact = fact * cont;
+		}
+        return (fact);
+	}
+
+main(){
+    read(x);
+	x = factorial(x);
+    write(x);
+}

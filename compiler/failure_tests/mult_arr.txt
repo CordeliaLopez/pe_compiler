@@ -1,0 +1,20 @@
+program prueba;
+
+var int: a[2], b[2], c[2], i, j, x;
+var float: det;
+
+main(){
+    for j = 0 to 1 do{
+        a[j] = j;
+    }
+	
+    b = a;
+
+    c = a * b;
+
+    for j = 0 to 1 do{
+        write(c[j]);
+    }
+	
+
+}

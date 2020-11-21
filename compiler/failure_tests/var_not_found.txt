@@ -1,0 +1,10 @@
+program prueba;
+
+var int: x;
+
+main(){
+    x = 5;
+    y = 3;
+
+   write(x);
+}

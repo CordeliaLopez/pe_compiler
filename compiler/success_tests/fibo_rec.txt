@@ -1,0 +1,24 @@
+program prueba;
+
+var int: x, i, j;
+
+int module fibo(var int: a;);
+	{
+        if(a < 2) then {
+            return (a);
+        }
+        else{
+            return(fibo(a - 1) + fibo(a - 2));
+        };
+	}
+
+main(){
+    read(x);
+    i = 0;
+    j = 0;
+    while (j < x) do{
+        j = fibo(i);
+        write(j);
+        i = i + 1;
+    }
+}

@@ -1,0 +1,30 @@
+program prueba;
+
+var int: arr[10], i, j, x, key;
+
+main(){
+    x = 9;
+    for i = 0 to 9 do{
+		  arr[i] = x;
+      x = x - 1;
+	  }
+
+	for i = 0 to 9 do{
+        key = arr[i];
+        j = i - 1;
+        arr[j+1] = key;
+		
+        while(j > -1) do {
+            if (arr[j] > key) then {
+	            arr[j+1] = arr[j];
+                j = j - 1;
+            };
+	    }
+      arr[j + 1] = key; 
+	}
+
+    for i = 0 to 9 do{
+		  write(arr[i]);
+  	}
+
+}

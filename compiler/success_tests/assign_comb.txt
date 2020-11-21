@@ -1,0 +1,27 @@
+program prueba;
+
+var int: z[2][2], i, j, x;
+
+int module suma(var int: a,y;);
+	var int: resultado;
+	{
+	    resultado = a + y;
+	    return (resultado);
+	}
+
+main(){
+    x = 1;
+	for i = 0 to 1 do{
+        for j = 0 to 1 do{
+            z[i][j] = x;
+            x = x + 1;
+        }
+	}
+
+    j = 3;
+    x = 2;
+    x = suma(x, j) + z[0][1] * 4;
+    write(z[0][1]);
+    write(x);
+
+}

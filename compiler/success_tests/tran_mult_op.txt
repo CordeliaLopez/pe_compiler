@@ -1,0 +1,32 @@
+program prueba;
+
+var int: a[3][2], b[2][3], c[2][3], i, j, x;
+
+main(){
+
+  x = 1;
+    for i = 0 to 2 do{
+        for j = 0 to 1 do{
+            a[i][j] = x;
+            x = x + 1;
+        }
+	}
+
+  x = 1;
+    for i = 0 to 1 do{
+        for j = 0 to 2 do{
+            b[i][j] = x;
+            x = x + 1;
+        }
+	}
+
+   c = a¡ + b;
+
+
+    for i = 0 to 1 do{
+        for j = 0 to 2 do{
+            write(c[i][j]);
+        }
+	}
+
+}

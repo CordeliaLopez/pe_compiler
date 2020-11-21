@@ -1,0 +1,4323 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+Rule 2     programa1 -> vars add_calc_vars_ac go_to_main_ac funcion
+Rule 3     add_main_jump_ac -> empty
+Rule 4     calc_temp_ac -> empty
+Rule 5     add_calc_vars_ac -> empty
+Rule 6     go_to_main_ac -> empty
+Rule 7     add_DirFunc -> ID
+Rule 8     bloque -> LBRACE bloque1 return RBRACE
+Rule 9     bloque1 -> estatuto bloque1
+Rule 10    bloque1 -> empty
+Rule 11    return -> RETURN LPAREN expresion RPAREN SEMICOLON return_ac
+Rule 12    return -> empty
+Rule 13    return_ac -> empty
+Rule 14    tipo -> INT
+Rule 15    tipo -> FLOAT
+Rule 16    tipo -> CHAR
+Rule 17    tipo_funcion -> tipo
+Rule 18    tipo_funcion -> VOID
+Rule 19    dim -> LBRACK exp RBRACK dim1
+Rule 20    dim -> empty
+Rule 21    dim1 -> LBRACK exp RBRACK
+Rule 22    dim1 -> empty
+Rule 23    dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+Rule 24    dim_access -> empty
+Rule 25    verify_dims_ac -> LBRACK
+Rule 26    verify_range_ac -> empty
+Rule 27    calc_virtual_addess_ac -> empty
+Rule 28    dim_access1 -> LBRACK exp RBRACK dim_2_ac
+Rule 29    dim_access1 -> empty
+Rule 30    dim_2_ac -> empty
+Rule 31    vars -> vars_order vars
+Rule 32    vars -> empty
+Rule 33    vars_order -> VAR tipo COLON vars0 SEMICOLON
+Rule 34    vars0 -> ID dim vars1
+Rule 35    vars1 -> COMMA ID dim vars1
+Rule 36    vars1 -> empty
+Rule 37    funcion -> funcion2 funcion
+Rule 38    funcion -> empty
+Rule 39    funcion1 -> tipo_funcion MODULE ID
+Rule 40    funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+Rule 41    add_init_quad_temp_count_ac -> empty
+Rule 42    end_func_ac -> empty
+Rule 43    add_param_tb_ac -> empty
+Rule 44    add_cont_vars_ac -> empty
+Rule 45    estatuto -> asignacion
+Rule 46    estatuto -> condicion
+Rule 47    estatuto -> write
+Rule 48    estatuto -> read
+Rule 49    estatuto -> forloop
+Rule 50    estatuto -> whileloop
+Rule 51    estatuto -> llamar_funcion
+Rule 52    asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON
+Rule 53    expresion -> expresion_cmp expresion1
+Rule 54    expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1
+Rule 55    expresion1 -> empty
+Rule 56    push_and_or_ac -> AND
+Rule 57    push_and_or_ac -> OR
+Rule 58    validar_and_or_ac -> empty
+Rule 59    expresion_cmp -> exp expresion_cmp1
+Rule 60    expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac
+Rule 61    expresion_cmp1 -> empty
+Rule 62    push_cmp_ac -> GRTR
+Rule 63    push_cmp_ac -> LESS
+Rule 64    push_cmp_ac -> EQEQ
+Rule 65    push_cmp_ac -> NOTEQ
+Rule 66    validar_comparacion_ac -> empty
+Rule 67    exp -> termino check_op_exp exp1
+Rule 68    exp1 -> push_op_exp exp
+Rule 69    exp1 -> empty
+Rule 70    push_op_exp -> PLUS
+Rule 71    push_op_exp -> MINUS
+Rule 72    check_op_exp -> empty
+Rule 73    termino -> factor check_op_term termino1
+Rule 74    termino1 -> push_op_term termino
+Rule 75    termino1 -> empty
+Rule 76    push_op_term -> TIMES
+Rule 77    push_op_term -> DIV
+Rule 78    check_op_term -> empty
+Rule 79    factor -> LPAREN expresion RPAREN
+Rule 80    factor -> varCte
+Rule 81    factor -> push_id factor1
+Rule 82    factor1 -> llamar_funcion_factor
+Rule 83    factor1 -> dim_access
+Rule 84    factor1 -> DET det_ac
+Rule 85    factor1 -> TRAN tran_ac
+Rule 86    factor1 -> INV inv_ac
+Rule 87    det_ac -> empty
+Rule 88    inv_ac -> push_id_inv det_ac
+Rule 89    push_id_inv -> empty
+Rule 90    tran_ac -> empty
+Rule 91    push_id -> ID
+Rule 92    push_id_assign -> ID
+Rule 93    llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac
+Rule 94    verificar_funcion_ac_factor -> LPAREN
+Rule 95    varCte -> constructIntCons
+Rule 96    varCte -> constructFloatCons
+Rule 97    varCte -> constructCharCons
+Rule 98    constructIntCons -> INTCTE
+Rule 99    constructFloatCons -> FLOATCTE
+Rule 100   constructCharCons -> CHARCTE
+Rule 101   llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON
+Rule 102   llamar_funcion1 -> exp validate_params_ac llamar_funcion2
+Rule 103   llamar_funcion1 -> empty
+Rule 104   llamar_funcion2 -> COMMA exp validate_params_ac llamar_funcion2
+Rule 105   llamar_funcion2 -> empty
+Rule 106   verificar_funcion_ac -> ID LPAREN
+Rule 107   validate_params_ac -> empty
+Rule 108   validate_num_param_ac -> empty
+Rule 109   read -> READ LPAREN read1 RPAREN SEMICOLON
+Rule 110   read1 -> push_id dim_access read_ac read2
+Rule 111   read2 -> COMMA push_id dim_access read_ac read2
+Rule 112   read2 -> empty
+Rule 113   read_ac -> empty
+Rule 114   write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON
+Rule 115   write1 -> expresion
+Rule 116   write1 -> agregarStringCTE
+Rule 117   agregarStringCTE -> STRINGCTE
+Rule 118   write2 -> COMMA write1 write2
+Rule 119   write2 -> empty
+Rule 120   condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+Rule 121   checkIfBool -> empty
+Rule 122   endIf -> empty
+Rule 123   condicion1 -> ELSE elseJump bloque
+Rule 124   condicion1 -> empty
+Rule 125   elseJump -> empty
+Rule 126   whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac
+Rule 127   push_return_ac -> empty
+Rule 128   handle_exp_ac -> empty
+Rule 129   end_while_ac -> empty
+Rule 130   forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac
+Rule 131   asignacion_for_ac -> ID EQUALS expresion
+Rule 132   do_ac -> empty
+Rule 133   for_end_ac -> empty
+Rule 134   empty -> <empty>
+
+Terminals, with rules where they appear
+
+AND                  : 56
+CHAR                 : 16
+CHARCTE              : 100
+COLON                : 33
+COMMA                : 35 104 111 118
+DET                  : 84
+DIV                  : 77
+DO                   : 126 130
+ELSE                 : 123
+EQEQ                 : 64
+EQUALS               : 52 131
+FLOAT                : 15
+FLOATCTE             : 99
+FOR                  : 130
+GRTR                 : 62
+ID                   : 7 34 35 39 91 92 106 131
+IF                   : 120
+INT                  : 14
+INTCTE               : 98
+INV                  : 86
+LBRACE               : 8
+LBRACK               : 19 21 25 28
+LESS                 : 63
+LPAREN               : 1 11 40 79 94 106 109 114 120
+MAIN                 : 1
+MINUS                : 71
+MODULE               : 39
+NOTEQ                : 65
+OR                   : 57
+PLUS                 : 70
+PROGRAM              : 1
+RBRACE               : 8
+RBRACK               : 19 21 23 28
+READ                 : 109
+RETURN               : 11
+RPAREN               : 1 11 40 79 93 101 109 114 120
+SEMICOLON            : 1 11 33 40 52 101 109 114 120
+STRINGCTE            : 117
+THEN                 : 120
+TIMES                : 76
+TO                   : 130
+TRAN                 : 85
+VAR                  : 33
+VOID                 : 18
+WHILE                : 126
+WRITE                : 114
+error                : 
+
+Nonterminals, with rules where they appear
+
+add_DirFunc          : 1
+add_calc_vars_ac     : 2
+add_cont_vars_ac     : 40
+add_init_quad_temp_count_ac : 40
+add_main_jump_ac     : 1
+add_param_tb_ac      : 40
+agregarStringCTE     : 116
+asignacion           : 45
+asignacion_for_ac    : 130
+bloque               : 1 40 120 123 126 130
+bloque1              : 8 9
+calc_temp_ac         : 1
+calc_virtual_addess_ac : 23
+checkIfBool          : 120
+check_op_exp         : 67
+check_op_term        : 73
+condicion            : 46
+condicion1           : 120
+constructCharCons    : 97
+constructFloatCons   : 96
+constructIntCons     : 95
+det_ac               : 84 88
+dim                  : 34 35
+dim1                 : 19
+dim_2_ac             : 28
+dim_access           : 52 83 110 111
+dim_access1          : 23
+do_ac                : 130
+elseJump             : 123
+empty                : 3 4 5 6 10 12 13 20 22 24 26 27 29 30 32 36 38 41 42 43 44 55 58 61 66 69 72 75 78 87 89 90 103 105 107 108 112 113 119 121 122 124 125 127 128 129 132 133
+endIf                : 120
+end_func_ac          : 40
+end_while_ac         : 126
+estatuto             : 9
+exp                  : 19 21 23 28 59 60 68 102 104 130
+exp1                 : 67
+expresion            : 11 52 79 115 120 126 131
+expresion1           : 53 54
+expresion_cmp        : 53 54
+expresion_cmp1       : 59
+factor               : 73
+factor1              : 81
+for_end_ac           : 130
+forloop              : 49
+funcion              : 2 37
+funcion1             : 40
+funcion2             : 37
+go_to_main_ac        : 2
+handle_exp_ac        : 126
+inv_ac               : 86
+llamar_funcion       : 51
+llamar_funcion1      : 93 101
+llamar_funcion2      : 102 104
+llamar_funcion_factor : 82
+programa             : 0
+programa1            : 1
+push_and_or_ac       : 54
+push_cmp_ac          : 60
+push_id              : 81 110 111
+push_id_assign       : 52
+push_id_inv          : 88
+push_op_exp          : 68
+push_op_term         : 74
+push_return_ac       : 126
+read                 : 48
+read1                : 109
+read2                : 110 111
+read_ac              : 110 111
+return               : 8
+return_ac            : 11
+termino              : 67 74
+termino1             : 73
+tipo                 : 17 33
+tipo_funcion         : 39
+tran_ac              : 85
+validar_and_or_ac    : 54
+validar_comparacion_ac : 60
+validate_num_param_ac : 93 101
+validate_params_ac   : 102 104
+varCte               : 80
+vars                 : 2 31 40 40
+vars0                : 33
+vars1                : 34 35
+vars_order           : 31
+verificar_funcion_ac : 101
+verificar_funcion_ac_factor : 93
+verify_dims_ac       : 23
+verify_range_ac      : 23
+whileloop            : 50
+write                : 47
+write1               : 114 118
+write2               : 114 118
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+
+    PROGRAM         shift and go to state 2
+
+    programa                       shift and go to state 1
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> PROGRAM . add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+    (7) add_DirFunc -> . ID
+
+    ID              shift and go to state 4
+
+    add_DirFunc                    shift and go to state 3
+
+state 3
+
+    (1) programa -> PROGRAM add_DirFunc . SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+
+    SEMICOLON       shift and go to state 5
+
+
+state 4
+
+    (7) add_DirFunc -> ID .
+
+    SEMICOLON       reduce using rule 7 (add_DirFunc -> ID .)
+
+
+state 5
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON . programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+    (2) programa1 -> . vars add_calc_vars_ac go_to_main_ac funcion
+    (31) vars -> . vars_order vars
+    (32) vars -> . empty
+    (33) vars_order -> . VAR tipo COLON vars0 SEMICOLON
+    (134) empty -> .
+
+    VAR             shift and go to state 10
+    VOID            reduce using rule 134 (empty -> .)
+    INT             reduce using rule 134 (empty -> .)
+    FLOAT           reduce using rule 134 (empty -> .)
+    CHAR            reduce using rule 134 (empty -> .)
+    MAIN            reduce using rule 134 (empty -> .)
+
+    programa1                      shift and go to state 6
+    vars                           shift and go to state 7
+    vars_order                     shift and go to state 8
+    empty                          shift and go to state 9
+
+state 6
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 . MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+
+    MAIN            shift and go to state 11
+
+
+state 7
+
+    (2) programa1 -> vars . add_calc_vars_ac go_to_main_ac funcion
+    (5) add_calc_vars_ac -> . empty
+    (134) empty -> .
+
+    VOID            reduce using rule 134 (empty -> .)
+    INT             reduce using rule 134 (empty -> .)
+    FLOAT           reduce using rule 134 (empty -> .)
+    CHAR            reduce using rule 134 (empty -> .)
+    MAIN            reduce using rule 134 (empty -> .)
+
+    add_calc_vars_ac               shift and go to state 12
+    empty                          shift and go to state 13
+
+state 8
+
+    (31) vars -> vars_order . vars
+    (31) vars -> . vars_order vars
+    (32) vars -> . empty
+    (33) vars_order -> . VAR tipo COLON vars0 SEMICOLON
+    (134) empty -> .
+
+    VAR             shift and go to state 10
+    VOID            reduce using rule 134 (empty -> .)
+    INT             reduce using rule 134 (empty -> .)
+    FLOAT           reduce using rule 134 (empty -> .)
+    CHAR            reduce using rule 134 (empty -> .)
+    MAIN            reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    vars_order                     shift and go to state 8
+    vars                           shift and go to state 14
+    empty                          shift and go to state 9
+
+state 9
+
+    (32) vars -> empty .
+
+    VOID            reduce using rule 32 (vars -> empty .)
+    INT             reduce using rule 32 (vars -> empty .)
+    FLOAT           reduce using rule 32 (vars -> empty .)
+    CHAR            reduce using rule 32 (vars -> empty .)
+    MAIN            reduce using rule 32 (vars -> empty .)
+    RPAREN          reduce using rule 32 (vars -> empty .)
+    LBRACE          reduce using rule 32 (vars -> empty .)
+
+
+state 10
+
+    (33) vars_order -> VAR . tipo COLON vars0 SEMICOLON
+    (14) tipo -> . INT
+    (15) tipo -> . FLOAT
+    (16) tipo -> . CHAR
+
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+
+    tipo                           shift and go to state 15
+
+state 11
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN . LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac
+
+    LPAREN          shift and go to state 19
+
+
+state 12
+
+    (2) programa1 -> vars add_calc_vars_ac . go_to_main_ac funcion
+    (6) go_to_main_ac -> . empty
+    (134) empty -> .
+
+    VOID            reduce using rule 134 (empty -> .)
+    INT             reduce using rule 134 (empty -> .)
+    FLOAT           reduce using rule 134 (empty -> .)
+    CHAR            reduce using rule 134 (empty -> .)
+    MAIN            reduce using rule 134 (empty -> .)
+
+    go_to_main_ac                  shift and go to state 20
+    empty                          shift and go to state 21
+
+state 13
+
+    (5) add_calc_vars_ac -> empty .
+
+    VOID            reduce using rule 5 (add_calc_vars_ac -> empty .)
+    INT             reduce using rule 5 (add_calc_vars_ac -> empty .)
+    FLOAT           reduce using rule 5 (add_calc_vars_ac -> empty .)
+    CHAR            reduce using rule 5 (add_calc_vars_ac -> empty .)
+    MAIN            reduce using rule 5 (add_calc_vars_ac -> empty .)
+
+
+state 14
+
+    (31) vars -> vars_order vars .
+
+    VOID            reduce using rule 31 (vars -> vars_order vars .)
+    INT             reduce using rule 31 (vars -> vars_order vars .)
+    FLOAT           reduce using rule 31 (vars -> vars_order vars .)
+    CHAR            reduce using rule 31 (vars -> vars_order vars .)
+    MAIN            reduce using rule 31 (vars -> vars_order vars .)
+    RPAREN          reduce using rule 31 (vars -> vars_order vars .)
+    LBRACE          reduce using rule 31 (vars -> vars_order vars .)
+
+
+state 15
+
+    (33) vars_order -> VAR tipo . COLON vars0 SEMICOLON
+
+    COLON           shift and go to state 22
+
+
+state 16
+
+    (14) tipo -> INT .
+
+    COLON           reduce using rule 14 (tipo -> INT .)
+    MODULE          reduce using rule 14 (tipo -> INT .)
+
+
+state 17
+
+    (15) tipo -> FLOAT .
+
+    COLON           reduce using rule 15 (tipo -> FLOAT .)
+    MODULE          reduce using rule 15 (tipo -> FLOAT .)
+
+
+state 18
+
+    (16) tipo -> CHAR .
+
+    COLON           reduce using rule 16 (tipo -> CHAR .)
+    MODULE          reduce using rule 16 (tipo -> CHAR .)
+
+
+state 19
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN . RPAREN add_main_jump_ac bloque calc_temp_ac
+
+    RPAREN          shift and go to state 23
+
+
+state 20
+
+    (2) programa1 -> vars add_calc_vars_ac go_to_main_ac . funcion
+    (37) funcion -> . funcion2 funcion
+    (38) funcion -> . empty
+    (40) funcion2 -> . funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (134) empty -> .
+    (39) funcion1 -> . tipo_funcion MODULE ID
+    (17) tipo_funcion -> . tipo
+    (18) tipo_funcion -> . VOID
+    (14) tipo -> . INT
+    (15) tipo -> . FLOAT
+    (16) tipo -> . CHAR
+
+    MAIN            reduce using rule 134 (empty -> .)
+    VOID            shift and go to state 30
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+
+    funcion                        shift and go to state 24
+    funcion2                       shift and go to state 25
+    empty                          shift and go to state 26
+    funcion1                       shift and go to state 27
+    tipo_funcion                   shift and go to state 28
+    tipo                           shift and go to state 29
+
+state 21
+
+    (6) go_to_main_ac -> empty .
+
+    VOID            reduce using rule 6 (go_to_main_ac -> empty .)
+    INT             reduce using rule 6 (go_to_main_ac -> empty .)
+    FLOAT           reduce using rule 6 (go_to_main_ac -> empty .)
+    CHAR            reduce using rule 6 (go_to_main_ac -> empty .)
+    MAIN            reduce using rule 6 (go_to_main_ac -> empty .)
+
+
+state 22
+
+    (33) vars_order -> VAR tipo COLON . vars0 SEMICOLON
+    (34) vars0 -> . ID dim vars1
+
+    ID              shift and go to state 32
+
+    vars0                          shift and go to state 31
+
+state 23
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN . add_main_jump_ac bloque calc_temp_ac
+    (3) add_main_jump_ac -> . empty
+    (134) empty -> .
+
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    add_main_jump_ac               shift and go to state 33
+    empty                          shift and go to state 34
+
+state 24
+
+    (2) programa1 -> vars add_calc_vars_ac go_to_main_ac funcion .
+
+    MAIN            reduce using rule 2 (programa1 -> vars add_calc_vars_ac go_to_main_ac funcion .)
+
+
+state 25
+
+    (37) funcion -> funcion2 . funcion
+    (37) funcion -> . funcion2 funcion
+    (38) funcion -> . empty
+    (40) funcion2 -> . funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (134) empty -> .
+    (39) funcion1 -> . tipo_funcion MODULE ID
+    (17) tipo_funcion -> . tipo
+    (18) tipo_funcion -> . VOID
+    (14) tipo -> . INT
+    (15) tipo -> . FLOAT
+    (16) tipo -> . CHAR
+
+    MAIN            reduce using rule 134 (empty -> .)
+    VOID            shift and go to state 30
+    INT             shift and go to state 16
+    FLOAT           shift and go to state 17
+    CHAR            shift and go to state 18
+
+    funcion2                       shift and go to state 25
+    funcion                        shift and go to state 35
+    empty                          shift and go to state 26
+    funcion1                       shift and go to state 27
+    tipo_funcion                   shift and go to state 28
+    tipo                           shift and go to state 29
+
+state 26
+
+    (38) funcion -> empty .
+
+    MAIN            reduce using rule 38 (funcion -> empty .)
+
+
+state 27
+
+    (40) funcion2 -> funcion1 . LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+
+    LPAREN          shift and go to state 36
+
+
+state 28
+
+    (39) funcion1 -> tipo_funcion . MODULE ID
+
+    MODULE          shift and go to state 37
+
+
+state 29
+
+    (17) tipo_funcion -> tipo .
+
+    MODULE          reduce using rule 17 (tipo_funcion -> tipo .)
+
+
+state 30
+
+    (18) tipo_funcion -> VOID .
+
+    MODULE          reduce using rule 18 (tipo_funcion -> VOID .)
+
+
+state 31
+
+    (33) vars_order -> VAR tipo COLON vars0 . SEMICOLON
+
+    SEMICOLON       shift and go to state 38
+
+
+state 32
+
+    (34) vars0 -> ID . dim vars1
+    (19) dim -> . LBRACK exp RBRACK dim1
+    (20) dim -> . empty
+    (134) empty -> .
+
+    LBRACK          shift and go to state 40
+    COMMA           reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    dim                            shift and go to state 39
+    empty                          shift and go to state 41
+
+state 33
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac . bloque calc_temp_ac
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 42
+
+state 34
+
+    (3) add_main_jump_ac -> empty .
+
+    LBRACE          reduce using rule 3 (add_main_jump_ac -> empty .)
+
+
+state 35
+
+    (37) funcion -> funcion2 funcion .
+
+    MAIN            reduce using rule 37 (funcion -> funcion2 funcion .)
+
+
+state 36
+
+    (40) funcion2 -> funcion1 LPAREN . vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (31) vars -> . vars_order vars
+    (32) vars -> . empty
+    (33) vars_order -> . VAR tipo COLON vars0 SEMICOLON
+    (134) empty -> .
+
+    VAR             shift and go to state 10
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    vars                           shift and go to state 44
+    vars_order                     shift and go to state 8
+    empty                          shift and go to state 9
+
+state 37
+
+    (39) funcion1 -> tipo_funcion MODULE . ID
+
+    ID              shift and go to state 45
+
+
+state 38
+
+    (33) vars_order -> VAR tipo COLON vars0 SEMICOLON .
+
+    VAR             reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    VOID            reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    INT             reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    FLOAT           reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    CHAR            reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    MAIN            reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    RPAREN          reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+    LBRACE          reduce using rule 33 (vars_order -> VAR tipo COLON vars0 SEMICOLON .)
+
+
+state 39
+
+    (34) vars0 -> ID dim . vars1
+    (35) vars1 -> . COMMA ID dim vars1
+    (36) vars1 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 47
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    vars1                          shift and go to state 46
+    empty                          shift and go to state 48
+
+state 40
+
+    (19) dim -> LBRACK . exp RBRACK dim1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 49
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 41
+
+    (20) dim -> empty .
+
+    COMMA           reduce using rule 20 (dim -> empty .)
+    SEMICOLON       reduce using rule 20 (dim -> empty .)
+
+
+state 42
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque . calc_temp_ac
+    (4) calc_temp_ac -> . empty
+    (134) empty -> .
+
+    $end            reduce using rule 134 (empty -> .)
+
+    calc_temp_ac                   shift and go to state 62
+    empty                          shift and go to state 63
+
+state 43
+
+    (8) bloque -> LBRACE . bloque1 return RBRACE
+    (9) bloque1 -> . estatuto bloque1
+    (10) bloque1 -> . empty
+    (45) estatuto -> . asignacion
+    (46) estatuto -> . condicion
+    (47) estatuto -> . write
+    (48) estatuto -> . read
+    (49) estatuto -> . forloop
+    (50) estatuto -> . whileloop
+    (51) estatuto -> . llamar_funcion
+    (134) empty -> .
+    (52) asignacion -> . push_id_assign dim_access EQUALS expresion SEMICOLON
+    (120) condicion -> . IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+    (114) write -> . WRITE LPAREN write1 write2 RPAREN SEMICOLON
+    (109) read -> . READ LPAREN read1 RPAREN SEMICOLON
+    (130) forloop -> . FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac
+    (126) whileloop -> . WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac
+    (101) llamar_funcion -> . verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON
+    (92) push_id_assign -> . ID
+    (106) verificar_funcion_ac -> . ID LPAREN
+
+    RETURN          reduce using rule 134 (empty -> .)
+    RBRACE          reduce using rule 134 (empty -> .)
+    IF              shift and go to state 75
+    WRITE           shift and go to state 76
+    READ            shift and go to state 77
+    FOR             shift and go to state 78
+    WHILE           shift and go to state 79
+    ID              shift and go to state 81
+
+    bloque1                        shift and go to state 64
+    estatuto                       shift and go to state 65
+    empty                          shift and go to state 66
+    asignacion                     shift and go to state 67
+    condicion                      shift and go to state 68
+    write                          shift and go to state 69
+    read                           shift and go to state 70
+    forloop                        shift and go to state 71
+    whileloop                      shift and go to state 72
+    llamar_funcion                 shift and go to state 73
+    push_id_assign                 shift and go to state 74
+    verificar_funcion_ac           shift and go to state 80
+
+state 44
+
+    (40) funcion2 -> funcion1 LPAREN vars . add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (43) add_param_tb_ac -> . empty
+    (134) empty -> .
+
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    add_param_tb_ac                shift and go to state 82
+    empty                          shift and go to state 83
+
+state 45
+
+    (39) funcion1 -> tipo_funcion MODULE ID .
+
+    LPAREN          reduce using rule 39 (funcion1 -> tipo_funcion MODULE ID .)
+
+
+state 46
+
+    (34) vars0 -> ID dim vars1 .
+
+    SEMICOLON       reduce using rule 34 (vars0 -> ID dim vars1 .)
+
+
+state 47
+
+    (35) vars1 -> COMMA . ID dim vars1
+
+    ID              shift and go to state 84
+
+
+state 48
+
+    (36) vars1 -> empty .
+
+    SEMICOLON       reduce using rule 36 (vars1 -> empty .)
+
+
+state 49
+
+    (19) dim -> LBRACK exp . RBRACK dim1
+
+    RBRACK          shift and go to state 85
+
+
+state 50
+
+    (67) exp -> termino . check_op_exp exp1
+    (72) check_op_exp -> . empty
+    (134) empty -> .
+
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    check_op_exp                   shift and go to state 86
+    empty                          shift and go to state 87
+
+state 51
+
+    (73) termino -> factor . check_op_term termino1
+    (78) check_op_term -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    check_op_term                  shift and go to state 88
+    empty                          shift and go to state 89
+
+state 52
+
+    (79) factor -> LPAREN . expresion RPAREN
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 90
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 53
+
+    (80) factor -> varCte .
+
+    TIMES           reduce using rule 80 (factor -> varCte .)
+    DIV             reduce using rule 80 (factor -> varCte .)
+    PLUS            reduce using rule 80 (factor -> varCte .)
+    MINUS           reduce using rule 80 (factor -> varCte .)
+    RBRACK          reduce using rule 80 (factor -> varCte .)
+    GRTR            reduce using rule 80 (factor -> varCte .)
+    LESS            reduce using rule 80 (factor -> varCte .)
+    EQEQ            reduce using rule 80 (factor -> varCte .)
+    NOTEQ           reduce using rule 80 (factor -> varCte .)
+    AND             reduce using rule 80 (factor -> varCte .)
+    OR              reduce using rule 80 (factor -> varCte .)
+    RPAREN          reduce using rule 80 (factor -> varCte .)
+    COMMA           reduce using rule 80 (factor -> varCte .)
+    DO              reduce using rule 80 (factor -> varCte .)
+    SEMICOLON       reduce using rule 80 (factor -> varCte .)
+    TO              reduce using rule 80 (factor -> varCte .)
+
+
+state 54
+
+    (81) factor -> push_id . factor1
+    (82) factor1 -> . llamar_funcion_factor
+    (83) factor1 -> . dim_access
+    (84) factor1 -> . DET det_ac
+    (85) factor1 -> . TRAN tran_ac
+    (86) factor1 -> . INV inv_ac
+    (93) llamar_funcion_factor -> . verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac
+    (23) dim_access -> . verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+    (24) dim_access -> . empty
+    (94) verificar_funcion_ac_factor -> . LPAREN
+    (25) verify_dims_ac -> . LBRACK
+    (134) empty -> .
+
+    DET             shift and go to state 96
+    TRAN            shift and go to state 97
+    INV             shift and go to state 98
+    LPAREN          shift and go to state 102
+    LBRACK          shift and go to state 103
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    factor1                        shift and go to state 93
+    llamar_funcion_factor          shift and go to state 94
+    dim_access                     shift and go to state 95
+    verificar_funcion_ac_factor    shift and go to state 99
+    verify_dims_ac                 shift and go to state 100
+    empty                          shift and go to state 101
+
+state 55
+
+    (95) varCte -> constructIntCons .
+
+    TIMES           reduce using rule 95 (varCte -> constructIntCons .)
+    DIV             reduce using rule 95 (varCte -> constructIntCons .)
+    PLUS            reduce using rule 95 (varCte -> constructIntCons .)
+    MINUS           reduce using rule 95 (varCte -> constructIntCons .)
+    RBRACK          reduce using rule 95 (varCte -> constructIntCons .)
+    GRTR            reduce using rule 95 (varCte -> constructIntCons .)
+    LESS            reduce using rule 95 (varCte -> constructIntCons .)
+    EQEQ            reduce using rule 95 (varCte -> constructIntCons .)
+    NOTEQ           reduce using rule 95 (varCte -> constructIntCons .)
+    AND             reduce using rule 95 (varCte -> constructIntCons .)
+    OR              reduce using rule 95 (varCte -> constructIntCons .)
+    RPAREN          reduce using rule 95 (varCte -> constructIntCons .)
+    COMMA           reduce using rule 95 (varCte -> constructIntCons .)
+    DO              reduce using rule 95 (varCte -> constructIntCons .)
+    SEMICOLON       reduce using rule 95 (varCte -> constructIntCons .)
+    TO              reduce using rule 95 (varCte -> constructIntCons .)
+
+
+state 56
+
+    (96) varCte -> constructFloatCons .
+
+    TIMES           reduce using rule 96 (varCte -> constructFloatCons .)
+    DIV             reduce using rule 96 (varCte -> constructFloatCons .)
+    PLUS            reduce using rule 96 (varCte -> constructFloatCons .)
+    MINUS           reduce using rule 96 (varCte -> constructFloatCons .)
+    RBRACK          reduce using rule 96 (varCte -> constructFloatCons .)
+    GRTR            reduce using rule 96 (varCte -> constructFloatCons .)
+    LESS            reduce using rule 96 (varCte -> constructFloatCons .)
+    EQEQ            reduce using rule 96 (varCte -> constructFloatCons .)
+    NOTEQ           reduce using rule 96 (varCte -> constructFloatCons .)
+    AND             reduce using rule 96 (varCte -> constructFloatCons .)
+    OR              reduce using rule 96 (varCte -> constructFloatCons .)
+    RPAREN          reduce using rule 96 (varCte -> constructFloatCons .)
+    COMMA           reduce using rule 96 (varCte -> constructFloatCons .)
+    DO              reduce using rule 96 (varCte -> constructFloatCons .)
+    SEMICOLON       reduce using rule 96 (varCte -> constructFloatCons .)
+    TO              reduce using rule 96 (varCte -> constructFloatCons .)
+
+
+state 57
+
+    (97) varCte -> constructCharCons .
+
+    TIMES           reduce using rule 97 (varCte -> constructCharCons .)
+    DIV             reduce using rule 97 (varCte -> constructCharCons .)
+    PLUS            reduce using rule 97 (varCte -> constructCharCons .)
+    MINUS           reduce using rule 97 (varCte -> constructCharCons .)
+    RBRACK          reduce using rule 97 (varCte -> constructCharCons .)
+    GRTR            reduce using rule 97 (varCte -> constructCharCons .)
+    LESS            reduce using rule 97 (varCte -> constructCharCons .)
+    EQEQ            reduce using rule 97 (varCte -> constructCharCons .)
+    NOTEQ           reduce using rule 97 (varCte -> constructCharCons .)
+    AND             reduce using rule 97 (varCte -> constructCharCons .)
+    OR              reduce using rule 97 (varCte -> constructCharCons .)
+    RPAREN          reduce using rule 97 (varCte -> constructCharCons .)
+    COMMA           reduce using rule 97 (varCte -> constructCharCons .)
+    DO              reduce using rule 97 (varCte -> constructCharCons .)
+    SEMICOLON       reduce using rule 97 (varCte -> constructCharCons .)
+    TO              reduce using rule 97 (varCte -> constructCharCons .)
+
+
+state 58
+
+    (91) push_id -> ID .
+
+    DET             reduce using rule 91 (push_id -> ID .)
+    TRAN            reduce using rule 91 (push_id -> ID .)
+    INV             reduce using rule 91 (push_id -> ID .)
+    LPAREN          reduce using rule 91 (push_id -> ID .)
+    LBRACK          reduce using rule 91 (push_id -> ID .)
+    TIMES           reduce using rule 91 (push_id -> ID .)
+    DIV             reduce using rule 91 (push_id -> ID .)
+    PLUS            reduce using rule 91 (push_id -> ID .)
+    MINUS           reduce using rule 91 (push_id -> ID .)
+    RBRACK          reduce using rule 91 (push_id -> ID .)
+    GRTR            reduce using rule 91 (push_id -> ID .)
+    LESS            reduce using rule 91 (push_id -> ID .)
+    EQEQ            reduce using rule 91 (push_id -> ID .)
+    NOTEQ           reduce using rule 91 (push_id -> ID .)
+    AND             reduce using rule 91 (push_id -> ID .)
+    OR              reduce using rule 91 (push_id -> ID .)
+    RPAREN          reduce using rule 91 (push_id -> ID .)
+    COMMA           reduce using rule 91 (push_id -> ID .)
+    DO              reduce using rule 91 (push_id -> ID .)
+    SEMICOLON       reduce using rule 91 (push_id -> ID .)
+    TO              reduce using rule 91 (push_id -> ID .)
+
+
+state 59
+
+    (98) constructIntCons -> INTCTE .
+
+    TIMES           reduce using rule 98 (constructIntCons -> INTCTE .)
+    DIV             reduce using rule 98 (constructIntCons -> INTCTE .)
+    PLUS            reduce using rule 98 (constructIntCons -> INTCTE .)
+    MINUS           reduce using rule 98 (constructIntCons -> INTCTE .)
+    RBRACK          reduce using rule 98 (constructIntCons -> INTCTE .)
+    GRTR            reduce using rule 98 (constructIntCons -> INTCTE .)
+    LESS            reduce using rule 98 (constructIntCons -> INTCTE .)
+    EQEQ            reduce using rule 98 (constructIntCons -> INTCTE .)
+    NOTEQ           reduce using rule 98 (constructIntCons -> INTCTE .)
+    AND             reduce using rule 98 (constructIntCons -> INTCTE .)
+    OR              reduce using rule 98 (constructIntCons -> INTCTE .)
+    RPAREN          reduce using rule 98 (constructIntCons -> INTCTE .)
+    COMMA           reduce using rule 98 (constructIntCons -> INTCTE .)
+    DO              reduce using rule 98 (constructIntCons -> INTCTE .)
+    SEMICOLON       reduce using rule 98 (constructIntCons -> INTCTE .)
+    TO              reduce using rule 98 (constructIntCons -> INTCTE .)
+
+
+state 60
+
+    (99) constructFloatCons -> FLOATCTE .
+
+    TIMES           reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    DIV             reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    PLUS            reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    MINUS           reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    RBRACK          reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    GRTR            reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    LESS            reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    EQEQ            reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    NOTEQ           reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    AND             reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    OR              reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    RPAREN          reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    COMMA           reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    DO              reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    SEMICOLON       reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+    TO              reduce using rule 99 (constructFloatCons -> FLOATCTE .)
+
+
+state 61
+
+    (100) constructCharCons -> CHARCTE .
+
+    TIMES           reduce using rule 100 (constructCharCons -> CHARCTE .)
+    DIV             reduce using rule 100 (constructCharCons -> CHARCTE .)
+    PLUS            reduce using rule 100 (constructCharCons -> CHARCTE .)
+    MINUS           reduce using rule 100 (constructCharCons -> CHARCTE .)
+    RBRACK          reduce using rule 100 (constructCharCons -> CHARCTE .)
+    GRTR            reduce using rule 100 (constructCharCons -> CHARCTE .)
+    LESS            reduce using rule 100 (constructCharCons -> CHARCTE .)
+    EQEQ            reduce using rule 100 (constructCharCons -> CHARCTE .)
+    NOTEQ           reduce using rule 100 (constructCharCons -> CHARCTE .)
+    AND             reduce using rule 100 (constructCharCons -> CHARCTE .)
+    OR              reduce using rule 100 (constructCharCons -> CHARCTE .)
+    RPAREN          reduce using rule 100 (constructCharCons -> CHARCTE .)
+    COMMA           reduce using rule 100 (constructCharCons -> CHARCTE .)
+    DO              reduce using rule 100 (constructCharCons -> CHARCTE .)
+    SEMICOLON       reduce using rule 100 (constructCharCons -> CHARCTE .)
+    TO              reduce using rule 100 (constructCharCons -> CHARCTE .)
+
+
+state 62
+
+    (1) programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac .
+
+    $end            reduce using rule 1 (programa -> PROGRAM add_DirFunc SEMICOLON programa1 MAIN LPAREN RPAREN add_main_jump_ac bloque calc_temp_ac .)
+
+
+state 63
+
+    (4) calc_temp_ac -> empty .
+
+    $end            reduce using rule 4 (calc_temp_ac -> empty .)
+
+
+state 64
+
+    (8) bloque -> LBRACE bloque1 . return RBRACE
+    (11) return -> . RETURN LPAREN expresion RPAREN SEMICOLON return_ac
+    (12) return -> . empty
+    (134) empty -> .
+
+    RETURN          shift and go to state 105
+    RBRACE          reduce using rule 134 (empty -> .)
+
+    return                         shift and go to state 104
+    empty                          shift and go to state 106
+
+state 65
+
+    (9) bloque1 -> estatuto . bloque1
+    (9) bloque1 -> . estatuto bloque1
+    (10) bloque1 -> . empty
+    (45) estatuto -> . asignacion
+    (46) estatuto -> . condicion
+    (47) estatuto -> . write
+    (48) estatuto -> . read
+    (49) estatuto -> . forloop
+    (50) estatuto -> . whileloop
+    (51) estatuto -> . llamar_funcion
+    (134) empty -> .
+    (52) asignacion -> . push_id_assign dim_access EQUALS expresion SEMICOLON
+    (120) condicion -> . IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+    (114) write -> . WRITE LPAREN write1 write2 RPAREN SEMICOLON
+    (109) read -> . READ LPAREN read1 RPAREN SEMICOLON
+    (130) forloop -> . FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac
+    (126) whileloop -> . WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac
+    (101) llamar_funcion -> . verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON
+    (92) push_id_assign -> . ID
+    (106) verificar_funcion_ac -> . ID LPAREN
+
+    RETURN          reduce using rule 134 (empty -> .)
+    RBRACE          reduce using rule 134 (empty -> .)
+    IF              shift and go to state 75
+    WRITE           shift and go to state 76
+    READ            shift and go to state 77
+    FOR             shift and go to state 78
+    WHILE           shift and go to state 79
+    ID              shift and go to state 81
+
+    estatuto                       shift and go to state 65
+    bloque1                        shift and go to state 107
+    empty                          shift and go to state 66
+    asignacion                     shift and go to state 67
+    condicion                      shift and go to state 68
+    write                          shift and go to state 69
+    read                           shift and go to state 70
+    forloop                        shift and go to state 71
+    whileloop                      shift and go to state 72
+    llamar_funcion                 shift and go to state 73
+    push_id_assign                 shift and go to state 74
+    verificar_funcion_ac           shift and go to state 80
+
+state 66
+
+    (10) bloque1 -> empty .
+
+    RETURN          reduce using rule 10 (bloque1 -> empty .)
+    RBRACE          reduce using rule 10 (bloque1 -> empty .)
+
+
+state 67
+
+    (45) estatuto -> asignacion .
+
+    IF              reduce using rule 45 (estatuto -> asignacion .)
+    WRITE           reduce using rule 45 (estatuto -> asignacion .)
+    READ            reduce using rule 45 (estatuto -> asignacion .)
+    FOR             reduce using rule 45 (estatuto -> asignacion .)
+    WHILE           reduce using rule 45 (estatuto -> asignacion .)
+    ID              reduce using rule 45 (estatuto -> asignacion .)
+    RETURN          reduce using rule 45 (estatuto -> asignacion .)
+    RBRACE          reduce using rule 45 (estatuto -> asignacion .)
+
+
+state 68
+
+    (46) estatuto -> condicion .
+
+    IF              reduce using rule 46 (estatuto -> condicion .)
+    WRITE           reduce using rule 46 (estatuto -> condicion .)
+    READ            reduce using rule 46 (estatuto -> condicion .)
+    FOR             reduce using rule 46 (estatuto -> condicion .)
+    WHILE           reduce using rule 46 (estatuto -> condicion .)
+    ID              reduce using rule 46 (estatuto -> condicion .)
+    RETURN          reduce using rule 46 (estatuto -> condicion .)
+    RBRACE          reduce using rule 46 (estatuto -> condicion .)
+
+
+state 69
+
+    (47) estatuto -> write .
+
+    IF              reduce using rule 47 (estatuto -> write .)
+    WRITE           reduce using rule 47 (estatuto -> write .)
+    READ            reduce using rule 47 (estatuto -> write .)
+    FOR             reduce using rule 47 (estatuto -> write .)
+    WHILE           reduce using rule 47 (estatuto -> write .)
+    ID              reduce using rule 47 (estatuto -> write .)
+    RETURN          reduce using rule 47 (estatuto -> write .)
+    RBRACE          reduce using rule 47 (estatuto -> write .)
+
+
+state 70
+
+    (48) estatuto -> read .
+
+    IF              reduce using rule 48 (estatuto -> read .)
+    WRITE           reduce using rule 48 (estatuto -> read .)
+    READ            reduce using rule 48 (estatuto -> read .)
+    FOR             reduce using rule 48 (estatuto -> read .)
+    WHILE           reduce using rule 48 (estatuto -> read .)
+    ID              reduce using rule 48 (estatuto -> read .)
+    RETURN          reduce using rule 48 (estatuto -> read .)
+    RBRACE          reduce using rule 48 (estatuto -> read .)
+
+
+state 71
+
+    (49) estatuto -> forloop .
+
+    IF              reduce using rule 49 (estatuto -> forloop .)
+    WRITE           reduce using rule 49 (estatuto -> forloop .)
+    READ            reduce using rule 49 (estatuto -> forloop .)
+    FOR             reduce using rule 49 (estatuto -> forloop .)
+    WHILE           reduce using rule 49 (estatuto -> forloop .)
+    ID              reduce using rule 49 (estatuto -> forloop .)
+    RETURN          reduce using rule 49 (estatuto -> forloop .)
+    RBRACE          reduce using rule 49 (estatuto -> forloop .)
+
+
+state 72
+
+    (50) estatuto -> whileloop .
+
+    IF              reduce using rule 50 (estatuto -> whileloop .)
+    WRITE           reduce using rule 50 (estatuto -> whileloop .)
+    READ            reduce using rule 50 (estatuto -> whileloop .)
+    FOR             reduce using rule 50 (estatuto -> whileloop .)
+    WHILE           reduce using rule 50 (estatuto -> whileloop .)
+    ID              reduce using rule 50 (estatuto -> whileloop .)
+    RETURN          reduce using rule 50 (estatuto -> whileloop .)
+    RBRACE          reduce using rule 50 (estatuto -> whileloop .)
+
+
+state 73
+
+    (51) estatuto -> llamar_funcion .
+
+    IF              reduce using rule 51 (estatuto -> llamar_funcion .)
+    WRITE           reduce using rule 51 (estatuto -> llamar_funcion .)
+    READ            reduce using rule 51 (estatuto -> llamar_funcion .)
+    FOR             reduce using rule 51 (estatuto -> llamar_funcion .)
+    WHILE           reduce using rule 51 (estatuto -> llamar_funcion .)
+    ID              reduce using rule 51 (estatuto -> llamar_funcion .)
+    RETURN          reduce using rule 51 (estatuto -> llamar_funcion .)
+    RBRACE          reduce using rule 51 (estatuto -> llamar_funcion .)
+
+
+state 74
+
+    (52) asignacion -> push_id_assign . dim_access EQUALS expresion SEMICOLON
+    (23) dim_access -> . verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+    (24) dim_access -> . empty
+    (25) verify_dims_ac -> . LBRACK
+    (134) empty -> .
+
+    LBRACK          shift and go to state 103
+    EQUALS          reduce using rule 134 (empty -> .)
+
+    dim_access                     shift and go to state 108
+    verify_dims_ac                 shift and go to state 100
+    empty                          shift and go to state 101
+
+state 75
+
+    (120) condicion -> IF . LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+
+    LPAREN          shift and go to state 109
+
+
+state 76
+
+    (114) write -> WRITE . LPAREN write1 write2 RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 110
+
+
+state 77
+
+    (109) read -> READ . LPAREN read1 RPAREN SEMICOLON
+
+    LPAREN          shift and go to state 111
+
+
+state 78
+
+    (130) forloop -> FOR . asignacion_for_ac TO exp DO do_ac bloque for_end_ac
+    (131) asignacion_for_ac -> . ID EQUALS expresion
+
+    ID              shift and go to state 113
+
+    asignacion_for_ac              shift and go to state 112
+
+state 79
+
+    (126) whileloop -> WHILE . push_return_ac expresion handle_exp_ac DO bloque end_while_ac
+    (127) push_return_ac -> . empty
+    (134) empty -> .
+
+    LPAREN          reduce using rule 134 (empty -> .)
+    ID              reduce using rule 134 (empty -> .)
+    INTCTE          reduce using rule 134 (empty -> .)
+    FLOATCTE        reduce using rule 134 (empty -> .)
+    CHARCTE         reduce using rule 134 (empty -> .)
+
+    push_return_ac                 shift and go to state 114
+    empty                          shift and go to state 115
+
+state 80
+
+    (101) llamar_funcion -> verificar_funcion_ac . llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON
+    (102) llamar_funcion1 -> . exp validate_params_ac llamar_funcion2
+    (103) llamar_funcion1 -> . empty
+    (67) exp -> . termino check_op_exp exp1
+    (134) empty -> .
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    RPAREN          reduce using rule 134 (empty -> .)
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    llamar_funcion1                shift and go to state 116
+    exp                            shift and go to state 117
+    empty                          shift and go to state 118
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 81
+
+    (92) push_id_assign -> ID .
+    (106) verificar_funcion_ac -> ID . LPAREN
+
+    LBRACK          reduce using rule 92 (push_id_assign -> ID .)
+    EQUALS          reduce using rule 92 (push_id_assign -> ID .)
+    LPAREN          shift and go to state 119
+
+
+state 82
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac . RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+
+    RPAREN          shift and go to state 120
+
+
+state 83
+
+    (43) add_param_tb_ac -> empty .
+
+    RPAREN          reduce using rule 43 (add_param_tb_ac -> empty .)
+
+
+state 84
+
+    (35) vars1 -> COMMA ID . dim vars1
+    (19) dim -> . LBRACK exp RBRACK dim1
+    (20) dim -> . empty
+    (134) empty -> .
+
+    LBRACK          shift and go to state 40
+    COMMA           reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    dim                            shift and go to state 121
+    empty                          shift and go to state 41
+
+state 85
+
+    (19) dim -> LBRACK exp RBRACK . dim1
+    (21) dim1 -> . LBRACK exp RBRACK
+    (22) dim1 -> . empty
+    (134) empty -> .
+
+    LBRACK          shift and go to state 122
+    COMMA           reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    dim1                           shift and go to state 123
+    empty                          shift and go to state 124
+
+state 86
+
+    (67) exp -> termino check_op_exp . exp1
+    (68) exp1 -> . push_op_exp exp
+    (69) exp1 -> . empty
+    (70) push_op_exp -> . PLUS
+    (71) push_op_exp -> . MINUS
+    (134) empty -> .
+
+    PLUS            shift and go to state 128
+    MINUS           shift and go to state 129
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    exp1                           shift and go to state 125
+    push_op_exp                    shift and go to state 126
+    empty                          shift and go to state 127
+
+state 87
+
+    (72) check_op_exp -> empty .
+
+    PLUS            reduce using rule 72 (check_op_exp -> empty .)
+    MINUS           reduce using rule 72 (check_op_exp -> empty .)
+    RBRACK          reduce using rule 72 (check_op_exp -> empty .)
+    GRTR            reduce using rule 72 (check_op_exp -> empty .)
+    LESS            reduce using rule 72 (check_op_exp -> empty .)
+    EQEQ            reduce using rule 72 (check_op_exp -> empty .)
+    NOTEQ           reduce using rule 72 (check_op_exp -> empty .)
+    AND             reduce using rule 72 (check_op_exp -> empty .)
+    OR              reduce using rule 72 (check_op_exp -> empty .)
+    RPAREN          reduce using rule 72 (check_op_exp -> empty .)
+    COMMA           reduce using rule 72 (check_op_exp -> empty .)
+    DO              reduce using rule 72 (check_op_exp -> empty .)
+    SEMICOLON       reduce using rule 72 (check_op_exp -> empty .)
+    TO              reduce using rule 72 (check_op_exp -> empty .)
+
+
+state 88
+
+    (73) termino -> factor check_op_term . termino1
+    (74) termino1 -> . push_op_term termino
+    (75) termino1 -> . empty
+    (76) push_op_term -> . TIMES
+    (77) push_op_term -> . DIV
+    (134) empty -> .
+
+    TIMES           shift and go to state 133
+    DIV             shift and go to state 134
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    termino1                       shift and go to state 130
+    push_op_term                   shift and go to state 131
+    empty                          shift and go to state 132
+
+state 89
+
+    (78) check_op_term -> empty .
+
+    TIMES           reduce using rule 78 (check_op_term -> empty .)
+    DIV             reduce using rule 78 (check_op_term -> empty .)
+    PLUS            reduce using rule 78 (check_op_term -> empty .)
+    MINUS           reduce using rule 78 (check_op_term -> empty .)
+    RBRACK          reduce using rule 78 (check_op_term -> empty .)
+    GRTR            reduce using rule 78 (check_op_term -> empty .)
+    LESS            reduce using rule 78 (check_op_term -> empty .)
+    EQEQ            reduce using rule 78 (check_op_term -> empty .)
+    NOTEQ           reduce using rule 78 (check_op_term -> empty .)
+    AND             reduce using rule 78 (check_op_term -> empty .)
+    OR              reduce using rule 78 (check_op_term -> empty .)
+    RPAREN          reduce using rule 78 (check_op_term -> empty .)
+    COMMA           reduce using rule 78 (check_op_term -> empty .)
+    DO              reduce using rule 78 (check_op_term -> empty .)
+    SEMICOLON       reduce using rule 78 (check_op_term -> empty .)
+    TO              reduce using rule 78 (check_op_term -> empty .)
+
+
+state 90
+
+    (79) factor -> LPAREN expresion . RPAREN
+
+    RPAREN          shift and go to state 135
+
+
+state 91
+
+    (53) expresion -> expresion_cmp . expresion1
+    (54) expresion1 -> . push_and_or_ac expresion_cmp validar_and_or_ac expresion1
+    (55) expresion1 -> . empty
+    (56) push_and_or_ac -> . AND
+    (57) push_and_or_ac -> . OR
+    (134) empty -> .
+
+    AND             shift and go to state 139
+    OR              shift and go to state 140
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    expresion1                     shift and go to state 136
+    push_and_or_ac                 shift and go to state 137
+    empty                          shift and go to state 138
+
+state 92
+
+    (59) expresion_cmp -> exp . expresion_cmp1
+    (60) expresion_cmp1 -> . push_cmp_ac exp validar_comparacion_ac
+    (61) expresion_cmp1 -> . empty
+    (62) push_cmp_ac -> . GRTR
+    (63) push_cmp_ac -> . LESS
+    (64) push_cmp_ac -> . EQEQ
+    (65) push_cmp_ac -> . NOTEQ
+    (134) empty -> .
+
+    GRTR            shift and go to state 144
+    LESS            shift and go to state 145
+    EQEQ            shift and go to state 146
+    NOTEQ           shift and go to state 147
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    expresion_cmp1                 shift and go to state 141
+    push_cmp_ac                    shift and go to state 142
+    empty                          shift and go to state 143
+
+state 93
+
+    (81) factor -> push_id factor1 .
+
+    TIMES           reduce using rule 81 (factor -> push_id factor1 .)
+    DIV             reduce using rule 81 (factor -> push_id factor1 .)
+    PLUS            reduce using rule 81 (factor -> push_id factor1 .)
+    MINUS           reduce using rule 81 (factor -> push_id factor1 .)
+    RBRACK          reduce using rule 81 (factor -> push_id factor1 .)
+    GRTR            reduce using rule 81 (factor -> push_id factor1 .)
+    LESS            reduce using rule 81 (factor -> push_id factor1 .)
+    EQEQ            reduce using rule 81 (factor -> push_id factor1 .)
+    NOTEQ           reduce using rule 81 (factor -> push_id factor1 .)
+    AND             reduce using rule 81 (factor -> push_id factor1 .)
+    OR              reduce using rule 81 (factor -> push_id factor1 .)
+    RPAREN          reduce using rule 81 (factor -> push_id factor1 .)
+    COMMA           reduce using rule 81 (factor -> push_id factor1 .)
+    DO              reduce using rule 81 (factor -> push_id factor1 .)
+    SEMICOLON       reduce using rule 81 (factor -> push_id factor1 .)
+    TO              reduce using rule 81 (factor -> push_id factor1 .)
+
+
+state 94
+
+    (82) factor1 -> llamar_funcion_factor .
+
+    TIMES           reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    DIV             reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    PLUS            reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    MINUS           reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    RBRACK          reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    GRTR            reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    LESS            reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    EQEQ            reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    NOTEQ           reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    AND             reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    OR              reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    RPAREN          reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    COMMA           reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    DO              reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    SEMICOLON       reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+    TO              reduce using rule 82 (factor1 -> llamar_funcion_factor .)
+
+
+state 95
+
+    (83) factor1 -> dim_access .
+
+    TIMES           reduce using rule 83 (factor1 -> dim_access .)
+    DIV             reduce using rule 83 (factor1 -> dim_access .)
+    PLUS            reduce using rule 83 (factor1 -> dim_access .)
+    MINUS           reduce using rule 83 (factor1 -> dim_access .)
+    RBRACK          reduce using rule 83 (factor1 -> dim_access .)
+    GRTR            reduce using rule 83 (factor1 -> dim_access .)
+    LESS            reduce using rule 83 (factor1 -> dim_access .)
+    EQEQ            reduce using rule 83 (factor1 -> dim_access .)
+    NOTEQ           reduce using rule 83 (factor1 -> dim_access .)
+    AND             reduce using rule 83 (factor1 -> dim_access .)
+    OR              reduce using rule 83 (factor1 -> dim_access .)
+    RPAREN          reduce using rule 83 (factor1 -> dim_access .)
+    COMMA           reduce using rule 83 (factor1 -> dim_access .)
+    DO              reduce using rule 83 (factor1 -> dim_access .)
+    SEMICOLON       reduce using rule 83 (factor1 -> dim_access .)
+    TO              reduce using rule 83 (factor1 -> dim_access .)
+
+
+state 96
+
+    (84) factor1 -> DET . det_ac
+    (87) det_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    det_ac                         shift and go to state 148
+    empty                          shift and go to state 149
+
+state 97
+
+    (85) factor1 -> TRAN . tran_ac
+    (90) tran_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    tran_ac                        shift and go to state 150
+    empty                          shift and go to state 151
+
+state 98
+
+    (86) factor1 -> INV . inv_ac
+    (88) inv_ac -> . push_id_inv det_ac
+    (89) push_id_inv -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    inv_ac                         shift and go to state 152
+    push_id_inv                    shift and go to state 153
+    empty                          shift and go to state 154
+
+state 99
+
+    (93) llamar_funcion_factor -> verificar_funcion_ac_factor . llamar_funcion1 RPAREN validate_num_param_ac
+    (102) llamar_funcion1 -> . exp validate_params_ac llamar_funcion2
+    (103) llamar_funcion1 -> . empty
+    (67) exp -> . termino check_op_exp exp1
+    (134) empty -> .
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    RPAREN          reduce using rule 134 (empty -> .)
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    llamar_funcion1                shift and go to state 155
+    exp                            shift and go to state 117
+    empty                          shift and go to state 118
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 100
+
+    (23) dim_access -> verify_dims_ac . exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 156
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 101
+
+    (24) dim_access -> empty .
+
+    TIMES           reduce using rule 24 (dim_access -> empty .)
+    DIV             reduce using rule 24 (dim_access -> empty .)
+    PLUS            reduce using rule 24 (dim_access -> empty .)
+    MINUS           reduce using rule 24 (dim_access -> empty .)
+    RBRACK          reduce using rule 24 (dim_access -> empty .)
+    GRTR            reduce using rule 24 (dim_access -> empty .)
+    LESS            reduce using rule 24 (dim_access -> empty .)
+    EQEQ            reduce using rule 24 (dim_access -> empty .)
+    NOTEQ           reduce using rule 24 (dim_access -> empty .)
+    AND             reduce using rule 24 (dim_access -> empty .)
+    OR              reduce using rule 24 (dim_access -> empty .)
+    RPAREN          reduce using rule 24 (dim_access -> empty .)
+    COMMA           reduce using rule 24 (dim_access -> empty .)
+    DO              reduce using rule 24 (dim_access -> empty .)
+    SEMICOLON       reduce using rule 24 (dim_access -> empty .)
+    TO              reduce using rule 24 (dim_access -> empty .)
+    EQUALS          reduce using rule 24 (dim_access -> empty .)
+
+
+state 102
+
+    (94) verificar_funcion_ac_factor -> LPAREN .
+
+    LPAREN          reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+    ID              reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+    INTCTE          reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+    FLOATCTE        reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+    CHARCTE         reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+    RPAREN          reduce using rule 94 (verificar_funcion_ac_factor -> LPAREN .)
+
+
+state 103
+
+    (25) verify_dims_ac -> LBRACK .
+
+    LPAREN          reduce using rule 25 (verify_dims_ac -> LBRACK .)
+    ID              reduce using rule 25 (verify_dims_ac -> LBRACK .)
+    INTCTE          reduce using rule 25 (verify_dims_ac -> LBRACK .)
+    FLOATCTE        reduce using rule 25 (verify_dims_ac -> LBRACK .)
+    CHARCTE         reduce using rule 25 (verify_dims_ac -> LBRACK .)
+
+
+state 104
+
+    (8) bloque -> LBRACE bloque1 return . RBRACE
+
+    RBRACE          shift and go to state 157
+
+
+state 105
+
+    (11) return -> RETURN . LPAREN expresion RPAREN SEMICOLON return_ac
+
+    LPAREN          shift and go to state 158
+
+
+state 106
+
+    (12) return -> empty .
+
+    RBRACE          reduce using rule 12 (return -> empty .)
+
+
+state 107
+
+    (9) bloque1 -> estatuto bloque1 .
+
+    RETURN          reduce using rule 9 (bloque1 -> estatuto bloque1 .)
+    RBRACE          reduce using rule 9 (bloque1 -> estatuto bloque1 .)
+
+
+state 108
+
+    (52) asignacion -> push_id_assign dim_access . EQUALS expresion SEMICOLON
+
+    EQUALS          shift and go to state 159
+
+
+state 109
+
+    (120) condicion -> IF LPAREN . expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 160
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 110
+
+    (114) write -> WRITE LPAREN . write1 write2 RPAREN SEMICOLON
+    (115) write1 -> . expresion
+    (116) write1 -> . agregarStringCTE
+    (53) expresion -> . expresion_cmp expresion1
+    (117) agregarStringCTE -> . STRINGCTE
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    STRINGCTE       shift and go to state 164
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    write1                         shift and go to state 161
+    expresion                      shift and go to state 162
+    agregarStringCTE               shift and go to state 163
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 111
+
+    (109) read -> READ LPAREN . read1 RPAREN SEMICOLON
+    (110) read1 -> . push_id dim_access read_ac read2
+    (91) push_id -> . ID
+
+    ID              shift and go to state 58
+
+    read1                          shift and go to state 165
+    push_id                        shift and go to state 166
+
+state 112
+
+    (130) forloop -> FOR asignacion_for_ac . TO exp DO do_ac bloque for_end_ac
+
+    TO              shift and go to state 167
+
+
+state 113
+
+    (131) asignacion_for_ac -> ID . EQUALS expresion
+
+    EQUALS          shift and go to state 168
+
+
+state 114
+
+    (126) whileloop -> WHILE push_return_ac . expresion handle_exp_ac DO bloque end_while_ac
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 169
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 115
+
+    (127) push_return_ac -> empty .
+
+    LPAREN          reduce using rule 127 (push_return_ac -> empty .)
+    ID              reduce using rule 127 (push_return_ac -> empty .)
+    INTCTE          reduce using rule 127 (push_return_ac -> empty .)
+    FLOATCTE        reduce using rule 127 (push_return_ac -> empty .)
+    CHARCTE         reduce using rule 127 (push_return_ac -> empty .)
+
+
+state 116
+
+    (101) llamar_funcion -> verificar_funcion_ac llamar_funcion1 . RPAREN validate_num_param_ac SEMICOLON
+
+    RPAREN          shift and go to state 170
+
+
+state 117
+
+    (102) llamar_funcion1 -> exp . validate_params_ac llamar_funcion2
+    (107) validate_params_ac -> . empty
+    (134) empty -> .
+
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    validate_params_ac             shift and go to state 171
+    empty                          shift and go to state 172
+
+state 118
+
+    (103) llamar_funcion1 -> empty .
+
+    RPAREN          reduce using rule 103 (llamar_funcion1 -> empty .)
+
+
+state 119
+
+    (106) verificar_funcion_ac -> ID LPAREN .
+
+    LPAREN          reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+    ID              reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+    INTCTE          reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+    FLOATCTE        reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+    CHARCTE         reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+    RPAREN          reduce using rule 106 (verificar_funcion_ac -> ID LPAREN .)
+
+
+state 120
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN . SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+
+    SEMICOLON       shift and go to state 173
+
+
+state 121
+
+    (35) vars1 -> COMMA ID dim . vars1
+    (35) vars1 -> . COMMA ID dim vars1
+    (36) vars1 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 47
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    vars1                          shift and go to state 174
+    empty                          shift and go to state 48
+
+state 122
+
+    (21) dim1 -> LBRACK . exp RBRACK
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 175
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 123
+
+    (19) dim -> LBRACK exp RBRACK dim1 .
+
+    COMMA           reduce using rule 19 (dim -> LBRACK exp RBRACK dim1 .)
+    SEMICOLON       reduce using rule 19 (dim -> LBRACK exp RBRACK dim1 .)
+
+
+state 124
+
+    (22) dim1 -> empty .
+
+    COMMA           reduce using rule 22 (dim1 -> empty .)
+    SEMICOLON       reduce using rule 22 (dim1 -> empty .)
+
+
+state 125
+
+    (67) exp -> termino check_op_exp exp1 .
+
+    RBRACK          reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    GRTR            reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    LESS            reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    EQEQ            reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    NOTEQ           reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    AND             reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    OR              reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    RPAREN          reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    COMMA           reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    DO              reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    SEMICOLON       reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+    TO              reduce using rule 67 (exp -> termino check_op_exp exp1 .)
+
+
+state 126
+
+    (68) exp1 -> push_op_exp . exp
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 176
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 127
+
+    (69) exp1 -> empty .
+
+    RBRACK          reduce using rule 69 (exp1 -> empty .)
+    GRTR            reduce using rule 69 (exp1 -> empty .)
+    LESS            reduce using rule 69 (exp1 -> empty .)
+    EQEQ            reduce using rule 69 (exp1 -> empty .)
+    NOTEQ           reduce using rule 69 (exp1 -> empty .)
+    AND             reduce using rule 69 (exp1 -> empty .)
+    OR              reduce using rule 69 (exp1 -> empty .)
+    RPAREN          reduce using rule 69 (exp1 -> empty .)
+    COMMA           reduce using rule 69 (exp1 -> empty .)
+    DO              reduce using rule 69 (exp1 -> empty .)
+    SEMICOLON       reduce using rule 69 (exp1 -> empty .)
+    TO              reduce using rule 69 (exp1 -> empty .)
+
+
+state 128
+
+    (70) push_op_exp -> PLUS .
+
+    LPAREN          reduce using rule 70 (push_op_exp -> PLUS .)
+    ID              reduce using rule 70 (push_op_exp -> PLUS .)
+    INTCTE          reduce using rule 70 (push_op_exp -> PLUS .)
+    FLOATCTE        reduce using rule 70 (push_op_exp -> PLUS .)
+    CHARCTE         reduce using rule 70 (push_op_exp -> PLUS .)
+
+
+state 129
+
+    (71) push_op_exp -> MINUS .
+
+    LPAREN          reduce using rule 71 (push_op_exp -> MINUS .)
+    ID              reduce using rule 71 (push_op_exp -> MINUS .)
+    INTCTE          reduce using rule 71 (push_op_exp -> MINUS .)
+    FLOATCTE        reduce using rule 71 (push_op_exp -> MINUS .)
+    CHARCTE         reduce using rule 71 (push_op_exp -> MINUS .)
+
+
+state 130
+
+    (73) termino -> factor check_op_term termino1 .
+
+    PLUS            reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    MINUS           reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    RBRACK          reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    GRTR            reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    LESS            reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    EQEQ            reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    NOTEQ           reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    AND             reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    OR              reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    RPAREN          reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    COMMA           reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    DO              reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    SEMICOLON       reduce using rule 73 (termino -> factor check_op_term termino1 .)
+    TO              reduce using rule 73 (termino -> factor check_op_term termino1 .)
+
+
+state 131
+
+    (74) termino1 -> push_op_term . termino
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    termino                        shift and go to state 177
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 132
+
+    (75) termino1 -> empty .
+
+    PLUS            reduce using rule 75 (termino1 -> empty .)
+    MINUS           reduce using rule 75 (termino1 -> empty .)
+    RBRACK          reduce using rule 75 (termino1 -> empty .)
+    GRTR            reduce using rule 75 (termino1 -> empty .)
+    LESS            reduce using rule 75 (termino1 -> empty .)
+    EQEQ            reduce using rule 75 (termino1 -> empty .)
+    NOTEQ           reduce using rule 75 (termino1 -> empty .)
+    AND             reduce using rule 75 (termino1 -> empty .)
+    OR              reduce using rule 75 (termino1 -> empty .)
+    RPAREN          reduce using rule 75 (termino1 -> empty .)
+    COMMA           reduce using rule 75 (termino1 -> empty .)
+    DO              reduce using rule 75 (termino1 -> empty .)
+    SEMICOLON       reduce using rule 75 (termino1 -> empty .)
+    TO              reduce using rule 75 (termino1 -> empty .)
+
+
+state 133
+
+    (76) push_op_term -> TIMES .
+
+    LPAREN          reduce using rule 76 (push_op_term -> TIMES .)
+    ID              reduce using rule 76 (push_op_term -> TIMES .)
+    INTCTE          reduce using rule 76 (push_op_term -> TIMES .)
+    FLOATCTE        reduce using rule 76 (push_op_term -> TIMES .)
+    CHARCTE         reduce using rule 76 (push_op_term -> TIMES .)
+
+
+state 134
+
+    (77) push_op_term -> DIV .
+
+    LPAREN          reduce using rule 77 (push_op_term -> DIV .)
+    ID              reduce using rule 77 (push_op_term -> DIV .)
+    INTCTE          reduce using rule 77 (push_op_term -> DIV .)
+    FLOATCTE        reduce using rule 77 (push_op_term -> DIV .)
+    CHARCTE         reduce using rule 77 (push_op_term -> DIV .)
+
+
+state 135
+
+    (79) factor -> LPAREN expresion RPAREN .
+
+    TIMES           reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    DIV             reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    PLUS            reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    MINUS           reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    RBRACK          reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    GRTR            reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    LESS            reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    EQEQ            reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    NOTEQ           reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    AND             reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    OR              reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    RPAREN          reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    COMMA           reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    DO              reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    SEMICOLON       reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+    TO              reduce using rule 79 (factor -> LPAREN expresion RPAREN .)
+
+
+state 136
+
+    (53) expresion -> expresion_cmp expresion1 .
+
+    RPAREN          reduce using rule 53 (expresion -> expresion_cmp expresion1 .)
+    COMMA           reduce using rule 53 (expresion -> expresion_cmp expresion1 .)
+    DO              reduce using rule 53 (expresion -> expresion_cmp expresion1 .)
+    SEMICOLON       reduce using rule 53 (expresion -> expresion_cmp expresion1 .)
+    TO              reduce using rule 53 (expresion -> expresion_cmp expresion1 .)
+
+
+state 137
+
+    (54) expresion1 -> push_and_or_ac . expresion_cmp validar_and_or_ac expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion_cmp                  shift and go to state 178
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 138
+
+    (55) expresion1 -> empty .
+
+    RPAREN          reduce using rule 55 (expresion1 -> empty .)
+    COMMA           reduce using rule 55 (expresion1 -> empty .)
+    DO              reduce using rule 55 (expresion1 -> empty .)
+    SEMICOLON       reduce using rule 55 (expresion1 -> empty .)
+    TO              reduce using rule 55 (expresion1 -> empty .)
+
+
+state 139
+
+    (56) push_and_or_ac -> AND .
+
+    LPAREN          reduce using rule 56 (push_and_or_ac -> AND .)
+    ID              reduce using rule 56 (push_and_or_ac -> AND .)
+    INTCTE          reduce using rule 56 (push_and_or_ac -> AND .)
+    FLOATCTE        reduce using rule 56 (push_and_or_ac -> AND .)
+    CHARCTE         reduce using rule 56 (push_and_or_ac -> AND .)
+
+
+state 140
+
+    (57) push_and_or_ac -> OR .
+
+    LPAREN          reduce using rule 57 (push_and_or_ac -> OR .)
+    ID              reduce using rule 57 (push_and_or_ac -> OR .)
+    INTCTE          reduce using rule 57 (push_and_or_ac -> OR .)
+    FLOATCTE        reduce using rule 57 (push_and_or_ac -> OR .)
+    CHARCTE         reduce using rule 57 (push_and_or_ac -> OR .)
+
+
+state 141
+
+    (59) expresion_cmp -> exp expresion_cmp1 .
+
+    AND             reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    OR              reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    RPAREN          reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    COMMA           reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    DO              reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    SEMICOLON       reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+    TO              reduce using rule 59 (expresion_cmp -> exp expresion_cmp1 .)
+
+
+state 142
+
+    (60) expresion_cmp1 -> push_cmp_ac . exp validar_comparacion_ac
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 179
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 143
+
+    (61) expresion_cmp1 -> empty .
+
+    AND             reduce using rule 61 (expresion_cmp1 -> empty .)
+    OR              reduce using rule 61 (expresion_cmp1 -> empty .)
+    RPAREN          reduce using rule 61 (expresion_cmp1 -> empty .)
+    COMMA           reduce using rule 61 (expresion_cmp1 -> empty .)
+    DO              reduce using rule 61 (expresion_cmp1 -> empty .)
+    SEMICOLON       reduce using rule 61 (expresion_cmp1 -> empty .)
+    TO              reduce using rule 61 (expresion_cmp1 -> empty .)
+
+
+state 144
+
+    (62) push_cmp_ac -> GRTR .
+
+    LPAREN          reduce using rule 62 (push_cmp_ac -> GRTR .)
+    ID              reduce using rule 62 (push_cmp_ac -> GRTR .)
+    INTCTE          reduce using rule 62 (push_cmp_ac -> GRTR .)
+    FLOATCTE        reduce using rule 62 (push_cmp_ac -> GRTR .)
+    CHARCTE         reduce using rule 62 (push_cmp_ac -> GRTR .)
+
+
+state 145
+
+    (63) push_cmp_ac -> LESS .
+
+    LPAREN          reduce using rule 63 (push_cmp_ac -> LESS .)
+    ID              reduce using rule 63 (push_cmp_ac -> LESS .)
+    INTCTE          reduce using rule 63 (push_cmp_ac -> LESS .)
+    FLOATCTE        reduce using rule 63 (push_cmp_ac -> LESS .)
+    CHARCTE         reduce using rule 63 (push_cmp_ac -> LESS .)
+
+
+state 146
+
+    (64) push_cmp_ac -> EQEQ .
+
+    LPAREN          reduce using rule 64 (push_cmp_ac -> EQEQ .)
+    ID              reduce using rule 64 (push_cmp_ac -> EQEQ .)
+    INTCTE          reduce using rule 64 (push_cmp_ac -> EQEQ .)
+    FLOATCTE        reduce using rule 64 (push_cmp_ac -> EQEQ .)
+    CHARCTE         reduce using rule 64 (push_cmp_ac -> EQEQ .)
+
+
+state 147
+
+    (65) push_cmp_ac -> NOTEQ .
+
+    LPAREN          reduce using rule 65 (push_cmp_ac -> NOTEQ .)
+    ID              reduce using rule 65 (push_cmp_ac -> NOTEQ .)
+    INTCTE          reduce using rule 65 (push_cmp_ac -> NOTEQ .)
+    FLOATCTE        reduce using rule 65 (push_cmp_ac -> NOTEQ .)
+    CHARCTE         reduce using rule 65 (push_cmp_ac -> NOTEQ .)
+
+
+state 148
+
+    (84) factor1 -> DET det_ac .
+
+    TIMES           reduce using rule 84 (factor1 -> DET det_ac .)
+    DIV             reduce using rule 84 (factor1 -> DET det_ac .)
+    PLUS            reduce using rule 84 (factor1 -> DET det_ac .)
+    MINUS           reduce using rule 84 (factor1 -> DET det_ac .)
+    RBRACK          reduce using rule 84 (factor1 -> DET det_ac .)
+    GRTR            reduce using rule 84 (factor1 -> DET det_ac .)
+    LESS            reduce using rule 84 (factor1 -> DET det_ac .)
+    EQEQ            reduce using rule 84 (factor1 -> DET det_ac .)
+    NOTEQ           reduce using rule 84 (factor1 -> DET det_ac .)
+    AND             reduce using rule 84 (factor1 -> DET det_ac .)
+    OR              reduce using rule 84 (factor1 -> DET det_ac .)
+    RPAREN          reduce using rule 84 (factor1 -> DET det_ac .)
+    COMMA           reduce using rule 84 (factor1 -> DET det_ac .)
+    DO              reduce using rule 84 (factor1 -> DET det_ac .)
+    SEMICOLON       reduce using rule 84 (factor1 -> DET det_ac .)
+    TO              reduce using rule 84 (factor1 -> DET det_ac .)
+
+
+state 149
+
+    (87) det_ac -> empty .
+
+    TIMES           reduce using rule 87 (det_ac -> empty .)
+    DIV             reduce using rule 87 (det_ac -> empty .)
+    PLUS            reduce using rule 87 (det_ac -> empty .)
+    MINUS           reduce using rule 87 (det_ac -> empty .)
+    RBRACK          reduce using rule 87 (det_ac -> empty .)
+    GRTR            reduce using rule 87 (det_ac -> empty .)
+    LESS            reduce using rule 87 (det_ac -> empty .)
+    EQEQ            reduce using rule 87 (det_ac -> empty .)
+    NOTEQ           reduce using rule 87 (det_ac -> empty .)
+    AND             reduce using rule 87 (det_ac -> empty .)
+    OR              reduce using rule 87 (det_ac -> empty .)
+    RPAREN          reduce using rule 87 (det_ac -> empty .)
+    COMMA           reduce using rule 87 (det_ac -> empty .)
+    DO              reduce using rule 87 (det_ac -> empty .)
+    SEMICOLON       reduce using rule 87 (det_ac -> empty .)
+    TO              reduce using rule 87 (det_ac -> empty .)
+
+
+state 150
+
+    (85) factor1 -> TRAN tran_ac .
+
+    TIMES           reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    DIV             reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    PLUS            reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    MINUS           reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    RBRACK          reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    GRTR            reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    LESS            reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    EQEQ            reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    NOTEQ           reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    AND             reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    OR              reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    RPAREN          reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    COMMA           reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    DO              reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    SEMICOLON       reduce using rule 85 (factor1 -> TRAN tran_ac .)
+    TO              reduce using rule 85 (factor1 -> TRAN tran_ac .)
+
+
+state 151
+
+    (90) tran_ac -> empty .
+
+    TIMES           reduce using rule 90 (tran_ac -> empty .)
+    DIV             reduce using rule 90 (tran_ac -> empty .)
+    PLUS            reduce using rule 90 (tran_ac -> empty .)
+    MINUS           reduce using rule 90 (tran_ac -> empty .)
+    RBRACK          reduce using rule 90 (tran_ac -> empty .)
+    GRTR            reduce using rule 90 (tran_ac -> empty .)
+    LESS            reduce using rule 90 (tran_ac -> empty .)
+    EQEQ            reduce using rule 90 (tran_ac -> empty .)
+    NOTEQ           reduce using rule 90 (tran_ac -> empty .)
+    AND             reduce using rule 90 (tran_ac -> empty .)
+    OR              reduce using rule 90 (tran_ac -> empty .)
+    RPAREN          reduce using rule 90 (tran_ac -> empty .)
+    COMMA           reduce using rule 90 (tran_ac -> empty .)
+    DO              reduce using rule 90 (tran_ac -> empty .)
+    SEMICOLON       reduce using rule 90 (tran_ac -> empty .)
+    TO              reduce using rule 90 (tran_ac -> empty .)
+
+
+state 152
+
+    (86) factor1 -> INV inv_ac .
+
+    TIMES           reduce using rule 86 (factor1 -> INV inv_ac .)
+    DIV             reduce using rule 86 (factor1 -> INV inv_ac .)
+    PLUS            reduce using rule 86 (factor1 -> INV inv_ac .)
+    MINUS           reduce using rule 86 (factor1 -> INV inv_ac .)
+    RBRACK          reduce using rule 86 (factor1 -> INV inv_ac .)
+    GRTR            reduce using rule 86 (factor1 -> INV inv_ac .)
+    LESS            reduce using rule 86 (factor1 -> INV inv_ac .)
+    EQEQ            reduce using rule 86 (factor1 -> INV inv_ac .)
+    NOTEQ           reduce using rule 86 (factor1 -> INV inv_ac .)
+    AND             reduce using rule 86 (factor1 -> INV inv_ac .)
+    OR              reduce using rule 86 (factor1 -> INV inv_ac .)
+    RPAREN          reduce using rule 86 (factor1 -> INV inv_ac .)
+    COMMA           reduce using rule 86 (factor1 -> INV inv_ac .)
+    DO              reduce using rule 86 (factor1 -> INV inv_ac .)
+    SEMICOLON       reduce using rule 86 (factor1 -> INV inv_ac .)
+    TO              reduce using rule 86 (factor1 -> INV inv_ac .)
+
+
+state 153
+
+    (88) inv_ac -> push_id_inv . det_ac
+    (87) det_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    det_ac                         shift and go to state 180
+    empty                          shift and go to state 149
+
+state 154
+
+    (89) push_id_inv -> empty .
+
+    TIMES           reduce using rule 89 (push_id_inv -> empty .)
+    DIV             reduce using rule 89 (push_id_inv -> empty .)
+    PLUS            reduce using rule 89 (push_id_inv -> empty .)
+    MINUS           reduce using rule 89 (push_id_inv -> empty .)
+    RBRACK          reduce using rule 89 (push_id_inv -> empty .)
+    GRTR            reduce using rule 89 (push_id_inv -> empty .)
+    LESS            reduce using rule 89 (push_id_inv -> empty .)
+    EQEQ            reduce using rule 89 (push_id_inv -> empty .)
+    NOTEQ           reduce using rule 89 (push_id_inv -> empty .)
+    AND             reduce using rule 89 (push_id_inv -> empty .)
+    OR              reduce using rule 89 (push_id_inv -> empty .)
+    RPAREN          reduce using rule 89 (push_id_inv -> empty .)
+    COMMA           reduce using rule 89 (push_id_inv -> empty .)
+    DO              reduce using rule 89 (push_id_inv -> empty .)
+    SEMICOLON       reduce using rule 89 (push_id_inv -> empty .)
+    TO              reduce using rule 89 (push_id_inv -> empty .)
+
+
+state 155
+
+    (93) llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 . RPAREN validate_num_param_ac
+
+    RPAREN          shift and go to state 181
+
+
+state 156
+
+    (23) dim_access -> verify_dims_ac exp . RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+
+    RBRACK          shift and go to state 182
+
+
+state 157
+
+    (8) bloque -> LBRACE bloque1 return RBRACE .
+
+    $end            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    IF              reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    WRITE           reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    READ            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    FOR             reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    WHILE           reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    ID              reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    RETURN          reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    RBRACE          reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    ELSE            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    SEMICOLON       reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    VOID            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    INT             reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    FLOAT           reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    CHAR            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+    MAIN            reduce using rule 8 (bloque -> LBRACE bloque1 return RBRACE .)
+
+
+state 158
+
+    (11) return -> RETURN LPAREN . expresion RPAREN SEMICOLON return_ac
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 183
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 159
+
+    (52) asignacion -> push_id_assign dim_access EQUALS . expresion SEMICOLON
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 184
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 160
+
+    (120) condicion -> IF LPAREN expresion . RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON
+
+    RPAREN          shift and go to state 185
+
+
+state 161
+
+    (114) write -> WRITE LPAREN write1 . write2 RPAREN SEMICOLON
+    (118) write2 -> . COMMA write1 write2
+    (119) write2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 187
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    write2                         shift and go to state 186
+    empty                          shift and go to state 188
+
+state 162
+
+    (115) write1 -> expresion .
+
+    COMMA           reduce using rule 115 (write1 -> expresion .)
+    RPAREN          reduce using rule 115 (write1 -> expresion .)
+
+
+state 163
+
+    (116) write1 -> agregarStringCTE .
+
+    COMMA           reduce using rule 116 (write1 -> agregarStringCTE .)
+    RPAREN          reduce using rule 116 (write1 -> agregarStringCTE .)
+
+
+state 164
+
+    (117) agregarStringCTE -> STRINGCTE .
+
+    COMMA           reduce using rule 117 (agregarStringCTE -> STRINGCTE .)
+    RPAREN          reduce using rule 117 (agregarStringCTE -> STRINGCTE .)
+
+
+state 165
+
+    (109) read -> READ LPAREN read1 . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 189
+
+
+state 166
+
+    (110) read1 -> push_id . dim_access read_ac read2
+    (23) dim_access -> . verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+    (24) dim_access -> . empty
+    (25) verify_dims_ac -> . LBRACK
+    (134) empty -> .
+
+    LBRACK          shift and go to state 103
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    dim_access                     shift and go to state 190
+    verify_dims_ac                 shift and go to state 100
+    empty                          shift and go to state 101
+
+state 167
+
+    (130) forloop -> FOR asignacion_for_ac TO . exp DO do_ac bloque for_end_ac
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 191
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 168
+
+    (131) asignacion_for_ac -> ID EQUALS . expresion
+    (53) expresion -> . expresion_cmp expresion1
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    expresion                      shift and go to state 192
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 169
+
+    (126) whileloop -> WHILE push_return_ac expresion . handle_exp_ac DO bloque end_while_ac
+    (128) handle_exp_ac -> . empty
+    (134) empty -> .
+
+    DO              reduce using rule 134 (empty -> .)
+
+    handle_exp_ac                  shift and go to state 193
+    empty                          shift and go to state 194
+
+state 170
+
+    (101) llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN . validate_num_param_ac SEMICOLON
+    (108) validate_num_param_ac -> . empty
+    (134) empty -> .
+
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    validate_num_param_ac          shift and go to state 195
+    empty                          shift and go to state 196
+
+state 171
+
+    (102) llamar_funcion1 -> exp validate_params_ac . llamar_funcion2
+    (104) llamar_funcion2 -> . COMMA exp validate_params_ac llamar_funcion2
+    (105) llamar_funcion2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 198
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    llamar_funcion2                shift and go to state 197
+    empty                          shift and go to state 199
+
+state 172
+
+    (107) validate_params_ac -> empty .
+
+    COMMA           reduce using rule 107 (validate_params_ac -> empty .)
+    RPAREN          reduce using rule 107 (validate_params_ac -> empty .)
+
+
+state 173
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON . vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (31) vars -> . vars_order vars
+    (32) vars -> . empty
+    (33) vars_order -> . VAR tipo COLON vars0 SEMICOLON
+    (134) empty -> .
+
+    VAR             shift and go to state 10
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    vars                           shift and go to state 200
+    vars_order                     shift and go to state 8
+    empty                          shift and go to state 9
+
+state 174
+
+    (35) vars1 -> COMMA ID dim vars1 .
+
+    SEMICOLON       reduce using rule 35 (vars1 -> COMMA ID dim vars1 .)
+
+
+state 175
+
+    (21) dim1 -> LBRACK exp . RBRACK
+
+    RBRACK          shift and go to state 201
+
+
+state 176
+
+    (68) exp1 -> push_op_exp exp .
+
+    RBRACK          reduce using rule 68 (exp1 -> push_op_exp exp .)
+    GRTR            reduce using rule 68 (exp1 -> push_op_exp exp .)
+    LESS            reduce using rule 68 (exp1 -> push_op_exp exp .)
+    EQEQ            reduce using rule 68 (exp1 -> push_op_exp exp .)
+    NOTEQ           reduce using rule 68 (exp1 -> push_op_exp exp .)
+    AND             reduce using rule 68 (exp1 -> push_op_exp exp .)
+    OR              reduce using rule 68 (exp1 -> push_op_exp exp .)
+    RPAREN          reduce using rule 68 (exp1 -> push_op_exp exp .)
+    COMMA           reduce using rule 68 (exp1 -> push_op_exp exp .)
+    DO              reduce using rule 68 (exp1 -> push_op_exp exp .)
+    SEMICOLON       reduce using rule 68 (exp1 -> push_op_exp exp .)
+    TO              reduce using rule 68 (exp1 -> push_op_exp exp .)
+
+
+state 177
+
+    (74) termino1 -> push_op_term termino .
+
+    PLUS            reduce using rule 74 (termino1 -> push_op_term termino .)
+    MINUS           reduce using rule 74 (termino1 -> push_op_term termino .)
+    RBRACK          reduce using rule 74 (termino1 -> push_op_term termino .)
+    GRTR            reduce using rule 74 (termino1 -> push_op_term termino .)
+    LESS            reduce using rule 74 (termino1 -> push_op_term termino .)
+    EQEQ            reduce using rule 74 (termino1 -> push_op_term termino .)
+    NOTEQ           reduce using rule 74 (termino1 -> push_op_term termino .)
+    AND             reduce using rule 74 (termino1 -> push_op_term termino .)
+    OR              reduce using rule 74 (termino1 -> push_op_term termino .)
+    RPAREN          reduce using rule 74 (termino1 -> push_op_term termino .)
+    COMMA           reduce using rule 74 (termino1 -> push_op_term termino .)
+    DO              reduce using rule 74 (termino1 -> push_op_term termino .)
+    SEMICOLON       reduce using rule 74 (termino1 -> push_op_term termino .)
+    TO              reduce using rule 74 (termino1 -> push_op_term termino .)
+
+
+state 178
+
+    (54) expresion1 -> push_and_or_ac expresion_cmp . validar_and_or_ac expresion1
+    (58) validar_and_or_ac -> . empty
+    (134) empty -> .
+
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    validar_and_or_ac              shift and go to state 202
+    empty                          shift and go to state 203
+
+state 179
+
+    (60) expresion_cmp1 -> push_cmp_ac exp . validar_comparacion_ac
+    (66) validar_comparacion_ac -> . empty
+    (134) empty -> .
+
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    validar_comparacion_ac         shift and go to state 204
+    empty                          shift and go to state 205
+
+state 180
+
+    (88) inv_ac -> push_id_inv det_ac .
+
+    TIMES           reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    DIV             reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    PLUS            reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    MINUS           reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    RBRACK          reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    GRTR            reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    LESS            reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    EQEQ            reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    NOTEQ           reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    AND             reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    OR              reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    RPAREN          reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    COMMA           reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    DO              reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    SEMICOLON       reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+    TO              reduce using rule 88 (inv_ac -> push_id_inv det_ac .)
+
+
+state 181
+
+    (93) llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN . validate_num_param_ac
+    (108) validate_num_param_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    validate_num_param_ac          shift and go to state 206
+    empty                          shift and go to state 196
+
+state 182
+
+    (23) dim_access -> verify_dims_ac exp RBRACK . verify_range_ac dim_access1 calc_virtual_addess_ac
+    (26) verify_range_ac -> . empty
+    (134) empty -> .
+
+    LBRACK          reduce using rule 134 (empty -> .)
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+    EQUALS          reduce using rule 134 (empty -> .)
+
+    verify_range_ac                shift and go to state 207
+    empty                          shift and go to state 208
+
+state 183
+
+    (11) return -> RETURN LPAREN expresion . RPAREN SEMICOLON return_ac
+
+    RPAREN          shift and go to state 209
+
+
+state 184
+
+    (52) asignacion -> push_id_assign dim_access EQUALS expresion . SEMICOLON
+
+    SEMICOLON       shift and go to state 210
+
+
+state 185
+
+    (120) condicion -> IF LPAREN expresion RPAREN . checkIfBool THEN bloque condicion1 endIf SEMICOLON
+    (121) checkIfBool -> . empty
+    (134) empty -> .
+
+    THEN            reduce using rule 134 (empty -> .)
+
+    checkIfBool                    shift and go to state 211
+    empty                          shift and go to state 212
+
+state 186
+
+    (114) write -> WRITE LPAREN write1 write2 . RPAREN SEMICOLON
+
+    RPAREN          shift and go to state 213
+
+
+state 187
+
+    (118) write2 -> COMMA . write1 write2
+    (115) write1 -> . expresion
+    (116) write1 -> . agregarStringCTE
+    (53) expresion -> . expresion_cmp expresion1
+    (117) agregarStringCTE -> . STRINGCTE
+    (59) expresion_cmp -> . exp expresion_cmp1
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    STRINGCTE       shift and go to state 164
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    write1                         shift and go to state 214
+    expresion                      shift and go to state 162
+    agregarStringCTE               shift and go to state 163
+    expresion_cmp                  shift and go to state 91
+    exp                            shift and go to state 92
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 188
+
+    (119) write2 -> empty .
+
+    RPAREN          reduce using rule 119 (write2 -> empty .)
+
+
+state 189
+
+    (109) read -> READ LPAREN read1 RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 215
+
+
+state 190
+
+    (110) read1 -> push_id dim_access . read_ac read2
+    (113) read_ac -> . empty
+    (134) empty -> .
+
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    read_ac                        shift and go to state 216
+    empty                          shift and go to state 217
+
+state 191
+
+    (130) forloop -> FOR asignacion_for_ac TO exp . DO do_ac bloque for_end_ac
+
+    DO              shift and go to state 218
+
+
+state 192
+
+    (131) asignacion_for_ac -> ID EQUALS expresion .
+
+    TO              reduce using rule 131 (asignacion_for_ac -> ID EQUALS expresion .)
+
+
+state 193
+
+    (126) whileloop -> WHILE push_return_ac expresion handle_exp_ac . DO bloque end_while_ac
+
+    DO              shift and go to state 219
+
+
+state 194
+
+    (128) handle_exp_ac -> empty .
+
+    DO              reduce using rule 128 (handle_exp_ac -> empty .)
+
+
+state 195
+
+    (101) llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac . SEMICOLON
+
+    SEMICOLON       shift and go to state 220
+
+
+state 196
+
+    (108) validate_num_param_ac -> empty .
+
+    SEMICOLON       reduce using rule 108 (validate_num_param_ac -> empty .)
+    TIMES           reduce using rule 108 (validate_num_param_ac -> empty .)
+    DIV             reduce using rule 108 (validate_num_param_ac -> empty .)
+    PLUS            reduce using rule 108 (validate_num_param_ac -> empty .)
+    MINUS           reduce using rule 108 (validate_num_param_ac -> empty .)
+    RBRACK          reduce using rule 108 (validate_num_param_ac -> empty .)
+    GRTR            reduce using rule 108 (validate_num_param_ac -> empty .)
+    LESS            reduce using rule 108 (validate_num_param_ac -> empty .)
+    EQEQ            reduce using rule 108 (validate_num_param_ac -> empty .)
+    NOTEQ           reduce using rule 108 (validate_num_param_ac -> empty .)
+    AND             reduce using rule 108 (validate_num_param_ac -> empty .)
+    OR              reduce using rule 108 (validate_num_param_ac -> empty .)
+    RPAREN          reduce using rule 108 (validate_num_param_ac -> empty .)
+    COMMA           reduce using rule 108 (validate_num_param_ac -> empty .)
+    DO              reduce using rule 108 (validate_num_param_ac -> empty .)
+    TO              reduce using rule 108 (validate_num_param_ac -> empty .)
+
+
+state 197
+
+    (102) llamar_funcion1 -> exp validate_params_ac llamar_funcion2 .
+
+    RPAREN          reduce using rule 102 (llamar_funcion1 -> exp validate_params_ac llamar_funcion2 .)
+
+
+state 198
+
+    (104) llamar_funcion2 -> COMMA . exp validate_params_ac llamar_funcion2
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 221
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 199
+
+    (105) llamar_funcion2 -> empty .
+
+    RPAREN          reduce using rule 105 (llamar_funcion2 -> empty .)
+
+
+state 200
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars . add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac
+    (44) add_cont_vars_ac -> . empty
+    (134) empty -> .
+
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    add_cont_vars_ac               shift and go to state 222
+    empty                          shift and go to state 223
+
+state 201
+
+    (21) dim1 -> LBRACK exp RBRACK .
+
+    COMMA           reduce using rule 21 (dim1 -> LBRACK exp RBRACK .)
+    SEMICOLON       reduce using rule 21 (dim1 -> LBRACK exp RBRACK .)
+
+
+state 202
+
+    (54) expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac . expresion1
+    (54) expresion1 -> . push_and_or_ac expresion_cmp validar_and_or_ac expresion1
+    (55) expresion1 -> . empty
+    (56) push_and_or_ac -> . AND
+    (57) push_and_or_ac -> . OR
+    (134) empty -> .
+
+    AND             shift and go to state 139
+    OR              shift and go to state 140
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+
+    push_and_or_ac                 shift and go to state 137
+    expresion1                     shift and go to state 224
+    empty                          shift and go to state 138
+
+state 203
+
+    (58) validar_and_or_ac -> empty .
+
+    AND             reduce using rule 58 (validar_and_or_ac -> empty .)
+    OR              reduce using rule 58 (validar_and_or_ac -> empty .)
+    RPAREN          reduce using rule 58 (validar_and_or_ac -> empty .)
+    COMMA           reduce using rule 58 (validar_and_or_ac -> empty .)
+    DO              reduce using rule 58 (validar_and_or_ac -> empty .)
+    SEMICOLON       reduce using rule 58 (validar_and_or_ac -> empty .)
+    TO              reduce using rule 58 (validar_and_or_ac -> empty .)
+
+
+state 204
+
+    (60) expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .
+
+    AND             reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    OR              reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    RPAREN          reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    COMMA           reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    DO              reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    SEMICOLON       reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+    TO              reduce using rule 60 (expresion_cmp1 -> push_cmp_ac exp validar_comparacion_ac .)
+
+
+state 205
+
+    (66) validar_comparacion_ac -> empty .
+
+    AND             reduce using rule 66 (validar_comparacion_ac -> empty .)
+    OR              reduce using rule 66 (validar_comparacion_ac -> empty .)
+    RPAREN          reduce using rule 66 (validar_comparacion_ac -> empty .)
+    COMMA           reduce using rule 66 (validar_comparacion_ac -> empty .)
+    DO              reduce using rule 66 (validar_comparacion_ac -> empty .)
+    SEMICOLON       reduce using rule 66 (validar_comparacion_ac -> empty .)
+    TO              reduce using rule 66 (validar_comparacion_ac -> empty .)
+
+
+state 206
+
+    (93) llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .
+
+    TIMES           reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    DIV             reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    PLUS            reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    MINUS           reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    RBRACK          reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    GRTR            reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    LESS            reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    EQEQ            reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    NOTEQ           reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    AND             reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    OR              reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    RPAREN          reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    COMMA           reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    DO              reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    SEMICOLON       reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+    TO              reduce using rule 93 (llamar_funcion_factor -> verificar_funcion_ac_factor llamar_funcion1 RPAREN validate_num_param_ac .)
+
+
+state 207
+
+    (23) dim_access -> verify_dims_ac exp RBRACK verify_range_ac . dim_access1 calc_virtual_addess_ac
+    (28) dim_access1 -> . LBRACK exp RBRACK dim_2_ac
+    (29) dim_access1 -> . empty
+    (134) empty -> .
+
+    LBRACK          shift and go to state 226
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+    EQUALS          reduce using rule 134 (empty -> .)
+
+    dim_access1                    shift and go to state 225
+    empty                          shift and go to state 227
+
+state 208
+
+    (26) verify_range_ac -> empty .
+
+    LBRACK          reduce using rule 26 (verify_range_ac -> empty .)
+    TIMES           reduce using rule 26 (verify_range_ac -> empty .)
+    DIV             reduce using rule 26 (verify_range_ac -> empty .)
+    PLUS            reduce using rule 26 (verify_range_ac -> empty .)
+    MINUS           reduce using rule 26 (verify_range_ac -> empty .)
+    RBRACK          reduce using rule 26 (verify_range_ac -> empty .)
+    GRTR            reduce using rule 26 (verify_range_ac -> empty .)
+    LESS            reduce using rule 26 (verify_range_ac -> empty .)
+    EQEQ            reduce using rule 26 (verify_range_ac -> empty .)
+    NOTEQ           reduce using rule 26 (verify_range_ac -> empty .)
+    AND             reduce using rule 26 (verify_range_ac -> empty .)
+    OR              reduce using rule 26 (verify_range_ac -> empty .)
+    RPAREN          reduce using rule 26 (verify_range_ac -> empty .)
+    COMMA           reduce using rule 26 (verify_range_ac -> empty .)
+    DO              reduce using rule 26 (verify_range_ac -> empty .)
+    SEMICOLON       reduce using rule 26 (verify_range_ac -> empty .)
+    TO              reduce using rule 26 (verify_range_ac -> empty .)
+    EQUALS          reduce using rule 26 (verify_range_ac -> empty .)
+
+
+state 209
+
+    (11) return -> RETURN LPAREN expresion RPAREN . SEMICOLON return_ac
+
+    SEMICOLON       shift and go to state 228
+
+
+state 210
+
+    (52) asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .
+
+    IF              reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    WRITE           reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    READ            reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    FOR             reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    WHILE           reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    ID              reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    RETURN          reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+    RBRACE          reduce using rule 52 (asignacion -> push_id_assign dim_access EQUALS expresion SEMICOLON .)
+
+
+state 211
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool . THEN bloque condicion1 endIf SEMICOLON
+
+    THEN            shift and go to state 229
+
+
+state 212
+
+    (121) checkIfBool -> empty .
+
+    THEN            reduce using rule 121 (checkIfBool -> empty .)
+
+
+state 213
+
+    (114) write -> WRITE LPAREN write1 write2 RPAREN . SEMICOLON
+
+    SEMICOLON       shift and go to state 230
+
+
+state 214
+
+    (118) write2 -> COMMA write1 . write2
+    (118) write2 -> . COMMA write1 write2
+    (119) write2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 187
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    write2                         shift and go to state 231
+    empty                          shift and go to state 188
+
+state 215
+
+    (109) read -> READ LPAREN read1 RPAREN SEMICOLON .
+
+    IF              reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    WRITE           reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    READ            reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    FOR             reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    WHILE           reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    ID              reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    RETURN          reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 109 (read -> READ LPAREN read1 RPAREN SEMICOLON .)
+
+
+state 216
+
+    (110) read1 -> push_id dim_access read_ac . read2
+    (111) read2 -> . COMMA push_id dim_access read_ac read2
+    (112) read2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 233
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    read2                          shift and go to state 232
+    empty                          shift and go to state 234
+
+state 217
+
+    (113) read_ac -> empty .
+
+    COMMA           reduce using rule 113 (read_ac -> empty .)
+    RPAREN          reduce using rule 113 (read_ac -> empty .)
+
+
+state 218
+
+    (130) forloop -> FOR asignacion_for_ac TO exp DO . do_ac bloque for_end_ac
+    (132) do_ac -> . empty
+    (134) empty -> .
+
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    do_ac                          shift and go to state 235
+    empty                          shift and go to state 236
+
+state 219
+
+    (126) whileloop -> WHILE push_return_ac expresion handle_exp_ac DO . bloque end_while_ac
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 237
+
+state 220
+
+    (101) llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .
+
+    IF              reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    WRITE           reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    READ            reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    FOR             reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    WHILE           reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    ID              reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    RETURN          reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+    RBRACE          reduce using rule 101 (llamar_funcion -> verificar_funcion_ac llamar_funcion1 RPAREN validate_num_param_ac SEMICOLON .)
+
+
+state 221
+
+    (104) llamar_funcion2 -> COMMA exp . validate_params_ac llamar_funcion2
+    (107) validate_params_ac -> . empty
+    (134) empty -> .
+
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    validate_params_ac             shift and go to state 238
+    empty                          shift and go to state 172
+
+state 222
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac . add_init_quad_temp_count_ac bloque end_func_ac
+    (41) add_init_quad_temp_count_ac -> . empty
+    (134) empty -> .
+
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    add_init_quad_temp_count_ac    shift and go to state 239
+    empty                          shift and go to state 240
+
+state 223
+
+    (44) add_cont_vars_ac -> empty .
+
+    LBRACE          reduce using rule 44 (add_cont_vars_ac -> empty .)
+
+
+state 224
+
+    (54) expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .
+
+    RPAREN          reduce using rule 54 (expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .)
+    COMMA           reduce using rule 54 (expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .)
+    DO              reduce using rule 54 (expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .)
+    SEMICOLON       reduce using rule 54 (expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .)
+    TO              reduce using rule 54 (expresion1 -> push_and_or_ac expresion_cmp validar_and_or_ac expresion1 .)
+
+
+state 225
+
+    (23) dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 . calc_virtual_addess_ac
+    (27) calc_virtual_addess_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+    EQUALS          reduce using rule 134 (empty -> .)
+
+    calc_virtual_addess_ac         shift and go to state 241
+    empty                          shift and go to state 242
+
+state 226
+
+    (28) dim_access1 -> LBRACK . exp RBRACK dim_2_ac
+    (67) exp -> . termino check_op_exp exp1
+    (73) termino -> . factor check_op_term termino1
+    (79) factor -> . LPAREN expresion RPAREN
+    (80) factor -> . varCte
+    (81) factor -> . push_id factor1
+    (95) varCte -> . constructIntCons
+    (96) varCte -> . constructFloatCons
+    (97) varCte -> . constructCharCons
+    (91) push_id -> . ID
+    (98) constructIntCons -> . INTCTE
+    (99) constructFloatCons -> . FLOATCTE
+    (100) constructCharCons -> . CHARCTE
+
+    LPAREN          shift and go to state 52
+    ID              shift and go to state 58
+    INTCTE          shift and go to state 59
+    FLOATCTE        shift and go to state 60
+    CHARCTE         shift and go to state 61
+
+    exp                            shift and go to state 243
+    termino                        shift and go to state 50
+    factor                         shift and go to state 51
+    varCte                         shift and go to state 53
+    push_id                        shift and go to state 54
+    constructIntCons               shift and go to state 55
+    constructFloatCons             shift and go to state 56
+    constructCharCons              shift and go to state 57
+
+state 227
+
+    (29) dim_access1 -> empty .
+
+    TIMES           reduce using rule 29 (dim_access1 -> empty .)
+    DIV             reduce using rule 29 (dim_access1 -> empty .)
+    PLUS            reduce using rule 29 (dim_access1 -> empty .)
+    MINUS           reduce using rule 29 (dim_access1 -> empty .)
+    RBRACK          reduce using rule 29 (dim_access1 -> empty .)
+    GRTR            reduce using rule 29 (dim_access1 -> empty .)
+    LESS            reduce using rule 29 (dim_access1 -> empty .)
+    EQEQ            reduce using rule 29 (dim_access1 -> empty .)
+    NOTEQ           reduce using rule 29 (dim_access1 -> empty .)
+    AND             reduce using rule 29 (dim_access1 -> empty .)
+    OR              reduce using rule 29 (dim_access1 -> empty .)
+    RPAREN          reduce using rule 29 (dim_access1 -> empty .)
+    COMMA           reduce using rule 29 (dim_access1 -> empty .)
+    DO              reduce using rule 29 (dim_access1 -> empty .)
+    SEMICOLON       reduce using rule 29 (dim_access1 -> empty .)
+    TO              reduce using rule 29 (dim_access1 -> empty .)
+    EQUALS          reduce using rule 29 (dim_access1 -> empty .)
+
+
+state 228
+
+    (11) return -> RETURN LPAREN expresion RPAREN SEMICOLON . return_ac
+    (13) return_ac -> . empty
+    (134) empty -> .
+
+    RBRACE          reduce using rule 134 (empty -> .)
+
+    return_ac                      shift and go to state 244
+    empty                          shift and go to state 245
+
+state 229
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool THEN . bloque condicion1 endIf SEMICOLON
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 246
+
+state 230
+
+    (114) write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .
+
+    IF              reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    WRITE           reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    READ            reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    FOR             reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    WHILE           reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    ID              reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    RETURN          reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+    RBRACE          reduce using rule 114 (write -> WRITE LPAREN write1 write2 RPAREN SEMICOLON .)
+
+
+state 231
+
+    (118) write2 -> COMMA write1 write2 .
+
+    RPAREN          reduce using rule 118 (write2 -> COMMA write1 write2 .)
+
+
+state 232
+
+    (110) read1 -> push_id dim_access read_ac read2 .
+
+    RPAREN          reduce using rule 110 (read1 -> push_id dim_access read_ac read2 .)
+
+
+state 233
+
+    (111) read2 -> COMMA . push_id dim_access read_ac read2
+    (91) push_id -> . ID
+
+    ID              shift and go to state 58
+
+    push_id                        shift and go to state 247
+
+state 234
+
+    (112) read2 -> empty .
+
+    RPAREN          reduce using rule 112 (read2 -> empty .)
+
+
+state 235
+
+    (130) forloop -> FOR asignacion_for_ac TO exp DO do_ac . bloque for_end_ac
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 248
+
+state 236
+
+    (132) do_ac -> empty .
+
+    LBRACE          reduce using rule 132 (do_ac -> empty .)
+
+
+state 237
+
+    (126) whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque . end_while_ac
+    (129) end_while_ac -> . empty
+    (134) empty -> .
+
+    IF              reduce using rule 134 (empty -> .)
+    WRITE           reduce using rule 134 (empty -> .)
+    READ            reduce using rule 134 (empty -> .)
+    FOR             reduce using rule 134 (empty -> .)
+    WHILE           reduce using rule 134 (empty -> .)
+    ID              reduce using rule 134 (empty -> .)
+    RETURN          reduce using rule 134 (empty -> .)
+    RBRACE          reduce using rule 134 (empty -> .)
+
+    end_while_ac                   shift and go to state 249
+    empty                          shift and go to state 250
+
+state 238
+
+    (104) llamar_funcion2 -> COMMA exp validate_params_ac . llamar_funcion2
+    (104) llamar_funcion2 -> . COMMA exp validate_params_ac llamar_funcion2
+    (105) llamar_funcion2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 198
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    llamar_funcion2                shift and go to state 251
+    empty                          shift and go to state 199
+
+state 239
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac . bloque end_func_ac
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 252
+
+state 240
+
+    (41) add_init_quad_temp_count_ac -> empty .
+
+    LBRACE          reduce using rule 41 (add_init_quad_temp_count_ac -> empty .)
+
+
+state 241
+
+    (23) dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .
+
+    TIMES           reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    DIV             reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    PLUS            reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    MINUS           reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    RBRACK          reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    GRTR            reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    LESS            reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    EQEQ            reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    NOTEQ           reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    AND             reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    OR              reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    RPAREN          reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    COMMA           reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    DO              reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    SEMICOLON       reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    TO              reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+    EQUALS          reduce using rule 23 (dim_access -> verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac .)
+
+
+state 242
+
+    (27) calc_virtual_addess_ac -> empty .
+
+    TIMES           reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    DIV             reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    PLUS            reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    MINUS           reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    RBRACK          reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    GRTR            reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    LESS            reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    EQEQ            reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    NOTEQ           reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    AND             reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    OR              reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    RPAREN          reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    COMMA           reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    DO              reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    SEMICOLON       reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    TO              reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+    EQUALS          reduce using rule 27 (calc_virtual_addess_ac -> empty .)
+
+
+state 243
+
+    (28) dim_access1 -> LBRACK exp . RBRACK dim_2_ac
+
+    RBRACK          shift and go to state 253
+
+
+state 244
+
+    (11) return -> RETURN LPAREN expresion RPAREN SEMICOLON return_ac .
+
+    RBRACE          reduce using rule 11 (return -> RETURN LPAREN expresion RPAREN SEMICOLON return_ac .)
+
+
+state 245
+
+    (13) return_ac -> empty .
+
+    RBRACE          reduce using rule 13 (return_ac -> empty .)
+
+
+state 246
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque . condicion1 endIf SEMICOLON
+    (123) condicion1 -> . ELSE elseJump bloque
+    (124) condicion1 -> . empty
+    (134) empty -> .
+
+    ELSE            shift and go to state 255
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    condicion1                     shift and go to state 254
+    empty                          shift and go to state 256
+
+state 247
+
+    (111) read2 -> COMMA push_id . dim_access read_ac read2
+    (23) dim_access -> . verify_dims_ac exp RBRACK verify_range_ac dim_access1 calc_virtual_addess_ac
+    (24) dim_access -> . empty
+    (25) verify_dims_ac -> . LBRACK
+    (134) empty -> .
+
+    LBRACK          shift and go to state 103
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    dim_access                     shift and go to state 257
+    verify_dims_ac                 shift and go to state 100
+    empty                          shift and go to state 101
+
+state 248
+
+    (130) forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque . for_end_ac
+    (133) for_end_ac -> . empty
+    (134) empty -> .
+
+    IF              reduce using rule 134 (empty -> .)
+    WRITE           reduce using rule 134 (empty -> .)
+    READ            reduce using rule 134 (empty -> .)
+    FOR             reduce using rule 134 (empty -> .)
+    WHILE           reduce using rule 134 (empty -> .)
+    ID              reduce using rule 134 (empty -> .)
+    RETURN          reduce using rule 134 (empty -> .)
+    RBRACE          reduce using rule 134 (empty -> .)
+
+    for_end_ac                     shift and go to state 258
+    empty                          shift and go to state 259
+
+state 249
+
+    (126) whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .
+
+    IF              reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    WRITE           reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    READ            reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    FOR             reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    WHILE           reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    ID              reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    RETURN          reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+    RBRACE          reduce using rule 126 (whileloop -> WHILE push_return_ac expresion handle_exp_ac DO bloque end_while_ac .)
+
+
+state 250
+
+    (129) end_while_ac -> empty .
+
+    IF              reduce using rule 129 (end_while_ac -> empty .)
+    WRITE           reduce using rule 129 (end_while_ac -> empty .)
+    READ            reduce using rule 129 (end_while_ac -> empty .)
+    FOR             reduce using rule 129 (end_while_ac -> empty .)
+    WHILE           reduce using rule 129 (end_while_ac -> empty .)
+    ID              reduce using rule 129 (end_while_ac -> empty .)
+    RETURN          reduce using rule 129 (end_while_ac -> empty .)
+    RBRACE          reduce using rule 129 (end_while_ac -> empty .)
+
+
+state 251
+
+    (104) llamar_funcion2 -> COMMA exp validate_params_ac llamar_funcion2 .
+
+    RPAREN          reduce using rule 104 (llamar_funcion2 -> COMMA exp validate_params_ac llamar_funcion2 .)
+
+
+state 252
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque . end_func_ac
+    (42) end_func_ac -> . empty
+    (134) empty -> .
+
+    VOID            reduce using rule 134 (empty -> .)
+    INT             reduce using rule 134 (empty -> .)
+    FLOAT           reduce using rule 134 (empty -> .)
+    CHAR            reduce using rule 134 (empty -> .)
+    MAIN            reduce using rule 134 (empty -> .)
+
+    end_func_ac                    shift and go to state 260
+    empty                          shift and go to state 261
+
+state 253
+
+    (28) dim_access1 -> LBRACK exp RBRACK . dim_2_ac
+    (30) dim_2_ac -> . empty
+    (134) empty -> .
+
+    TIMES           reduce using rule 134 (empty -> .)
+    DIV             reduce using rule 134 (empty -> .)
+    PLUS            reduce using rule 134 (empty -> .)
+    MINUS           reduce using rule 134 (empty -> .)
+    RBRACK          reduce using rule 134 (empty -> .)
+    GRTR            reduce using rule 134 (empty -> .)
+    LESS            reduce using rule 134 (empty -> .)
+    EQEQ            reduce using rule 134 (empty -> .)
+    NOTEQ           reduce using rule 134 (empty -> .)
+    AND             reduce using rule 134 (empty -> .)
+    OR              reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+    COMMA           reduce using rule 134 (empty -> .)
+    DO              reduce using rule 134 (empty -> .)
+    SEMICOLON       reduce using rule 134 (empty -> .)
+    TO              reduce using rule 134 (empty -> .)
+    EQUALS          reduce using rule 134 (empty -> .)
+
+    dim_2_ac                       shift and go to state 262
+    empty                          shift and go to state 263
+
+state 254
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 . endIf SEMICOLON
+    (122) endIf -> . empty
+    (134) empty -> .
+
+    SEMICOLON       reduce using rule 134 (empty -> .)
+
+    endIf                          shift and go to state 264
+    empty                          shift and go to state 265
+
+state 255
+
+    (123) condicion1 -> ELSE . elseJump bloque
+    (125) elseJump -> . empty
+    (134) empty -> .
+
+    LBRACE          reduce using rule 134 (empty -> .)
+
+    elseJump                       shift and go to state 266
+    empty                          shift and go to state 267
+
+state 256
+
+    (124) condicion1 -> empty .
+
+    SEMICOLON       reduce using rule 124 (condicion1 -> empty .)
+
+
+state 257
+
+    (111) read2 -> COMMA push_id dim_access . read_ac read2
+    (113) read_ac -> . empty
+    (134) empty -> .
+
+    COMMA           reduce using rule 134 (empty -> .)
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    read_ac                        shift and go to state 268
+    empty                          shift and go to state 217
+
+state 258
+
+    (130) forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .
+
+    IF              reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    WRITE           reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    READ            reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    FOR             reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    WHILE           reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    ID              reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    RETURN          reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+    RBRACE          reduce using rule 130 (forloop -> FOR asignacion_for_ac TO exp DO do_ac bloque for_end_ac .)
+
+
+state 259
+
+    (133) for_end_ac -> empty .
+
+    IF              reduce using rule 133 (for_end_ac -> empty .)
+    WRITE           reduce using rule 133 (for_end_ac -> empty .)
+    READ            reduce using rule 133 (for_end_ac -> empty .)
+    FOR             reduce using rule 133 (for_end_ac -> empty .)
+    WHILE           reduce using rule 133 (for_end_ac -> empty .)
+    ID              reduce using rule 133 (for_end_ac -> empty .)
+    RETURN          reduce using rule 133 (for_end_ac -> empty .)
+    RBRACE          reduce using rule 133 (for_end_ac -> empty .)
+
+
+state 260
+
+    (40) funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .
+
+    VOID            reduce using rule 40 (funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .)
+    INT             reduce using rule 40 (funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .)
+    FLOAT           reduce using rule 40 (funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .)
+    CHAR            reduce using rule 40 (funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .)
+    MAIN            reduce using rule 40 (funcion2 -> funcion1 LPAREN vars add_param_tb_ac RPAREN SEMICOLON vars add_cont_vars_ac add_init_quad_temp_count_ac bloque end_func_ac .)
+
+
+state 261
+
+    (42) end_func_ac -> empty .
+
+    VOID            reduce using rule 42 (end_func_ac -> empty .)
+    INT             reduce using rule 42 (end_func_ac -> empty .)
+    FLOAT           reduce using rule 42 (end_func_ac -> empty .)
+    CHAR            reduce using rule 42 (end_func_ac -> empty .)
+    MAIN            reduce using rule 42 (end_func_ac -> empty .)
+
+
+state 262
+
+    (28) dim_access1 -> LBRACK exp RBRACK dim_2_ac .
+
+    TIMES           reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    DIV             reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    PLUS            reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    MINUS           reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    RBRACK          reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    GRTR            reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    LESS            reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    EQEQ            reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    NOTEQ           reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    AND             reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    OR              reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    RPAREN          reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    COMMA           reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    DO              reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    SEMICOLON       reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    TO              reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+    EQUALS          reduce using rule 28 (dim_access1 -> LBRACK exp RBRACK dim_2_ac .)
+
+
+state 263
+
+    (30) dim_2_ac -> empty .
+
+    TIMES           reduce using rule 30 (dim_2_ac -> empty .)
+    DIV             reduce using rule 30 (dim_2_ac -> empty .)
+    PLUS            reduce using rule 30 (dim_2_ac -> empty .)
+    MINUS           reduce using rule 30 (dim_2_ac -> empty .)
+    RBRACK          reduce using rule 30 (dim_2_ac -> empty .)
+    GRTR            reduce using rule 30 (dim_2_ac -> empty .)
+    LESS            reduce using rule 30 (dim_2_ac -> empty .)
+    EQEQ            reduce using rule 30 (dim_2_ac -> empty .)
+    NOTEQ           reduce using rule 30 (dim_2_ac -> empty .)
+    AND             reduce using rule 30 (dim_2_ac -> empty .)
+    OR              reduce using rule 30 (dim_2_ac -> empty .)
+    RPAREN          reduce using rule 30 (dim_2_ac -> empty .)
+    COMMA           reduce using rule 30 (dim_2_ac -> empty .)
+    DO              reduce using rule 30 (dim_2_ac -> empty .)
+    SEMICOLON       reduce using rule 30 (dim_2_ac -> empty .)
+    TO              reduce using rule 30 (dim_2_ac -> empty .)
+    EQUALS          reduce using rule 30 (dim_2_ac -> empty .)
+
+
+state 264
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf . SEMICOLON
+
+    SEMICOLON       shift and go to state 269
+
+
+state 265
+
+    (122) endIf -> empty .
+
+    SEMICOLON       reduce using rule 122 (endIf -> empty .)
+
+
+state 266
+
+    (123) condicion1 -> ELSE elseJump . bloque
+    (8) bloque -> . LBRACE bloque1 return RBRACE
+
+    LBRACE          shift and go to state 43
+
+    bloque                         shift and go to state 270
+
+state 267
+
+    (125) elseJump -> empty .
+
+    LBRACE          reduce using rule 125 (elseJump -> empty .)
+
+
+state 268
+
+    (111) read2 -> COMMA push_id dim_access read_ac . read2
+    (111) read2 -> . COMMA push_id dim_access read_ac read2
+    (112) read2 -> . empty
+    (134) empty -> .
+
+    COMMA           shift and go to state 233
+    RPAREN          reduce using rule 134 (empty -> .)
+
+    read2                          shift and go to state 271
+    empty                          shift and go to state 234
+
+state 269
+
+    (120) condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .
+
+    IF              reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    WRITE           reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    READ            reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    FOR             reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    WHILE           reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    ID              reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    RETURN          reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+    RBRACE          reduce using rule 120 (condicion -> IF LPAREN expresion RPAREN checkIfBool THEN bloque condicion1 endIf SEMICOLON .)
+
+
+state 270
+
+    (123) condicion1 -> ELSE elseJump bloque .
+
+    SEMICOLON       reduce using rule 123 (condicion1 -> ELSE elseJump bloque .)
+
+
+state 271
+
+    (111) read2 -> COMMA push_id dim_access read_ac read2 .
+
+    RPAREN          reduce using rule 111 (read2 -> COMMA push_id dim_access read_ac read2 .)
+

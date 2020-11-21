@@ -1,0 +1,14 @@
+program prueba;
+
+var int: i;
+var float: cont;
+
+
+main(){
+
+    for i = 0.0 to 2 do{
+	    cont = 0.2;
+	}
+
+    write(cont);
+}

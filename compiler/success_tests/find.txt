@@ -1,0 +1,24 @@
+program prueba;
+
+var int: arr[10], cont, j, found;
+
+main(){
+
+    for cont = 0 to 9 do{
+		arr[cont] = cont * 2;
+	}
+
+    read(j);
+    found = 0;
+	for cont = 0 to 9 do{
+		if (arr[cont] == j) then {
+            write(j, " was found in ", cont);
+            found = 1;
+        };
+	}
+
+    if (found == 0) then{
+        write(j, " was not found");
+    };
+
+}

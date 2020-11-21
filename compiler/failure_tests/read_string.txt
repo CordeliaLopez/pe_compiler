@@ -1,0 +1,11 @@
+program prueba;
+
+var char: i;
+
+
+main(){
+    read(i);
+    
+    write(i);
+
+}
